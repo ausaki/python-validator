@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[scripts]
+test = 'pytest tests'
+
+[dev-packages]
+mkdocs = "*"
+pytest = "*"
+python-validator = {path = ".", editable = true}
+"autopep8" = "*"
+ipython = "*"
+
+[packages]
+six = "*"
+
+[requires]
+python_version = "2.7"
