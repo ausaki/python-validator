@@ -34,6 +34,7 @@ class Validator(object):
     """
 
     def __init__(self, raw_data):
+        assert isinstance(raw_data, dict)
         self.raw_data = raw_data
         self.validated_data = None
         self.errors = {}

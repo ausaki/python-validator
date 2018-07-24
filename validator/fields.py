@@ -7,6 +7,11 @@ import uuid
 import re
 import copy
 import datetime
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+from IPy import IP, MAX_IPV4_ADDRESS, MAX_IPV6_ADDRESS
 from . import exceptions
 
 
@@ -21,6 +26,8 @@ __all__ = [
     'MD5Field',
     'SHAField',
     'EmailField',
+    'IPAddressField',
+    'URLField',
     'EnumField',
     'DictField',
     'ListField',
@@ -207,7 +214,7 @@ class StringField(BaseField):
         self.min_length = min_length
         self.max_length = max_length
 
-        if regex is not None:
+        if isinstance(regex, six.string_types):
             regex = re.compile(regex)
         self.regex = regex
 
@@ -423,26 +430,67 @@ class EmailField(StringField):
         return '{0}@{1}'.format(name, domain)
 
 
-class IPAddredssField(BaseField):
-    INTERNAL_TYPE = six.string_types
+class IPAddressField(BaseField):
+    INTERNAL_TYPE = IP
     FIELD_TYPE_NAME = 'ip_address'
-    SUPPORT_VERSIONS = [4, 6, 'all']
+    SUPPORT_VERSIONS = ['ipv4', 'ipv6', 'both']
 
-    def __init__(self, version='all', **kwargs):
+    def __init__(self, version='both', **kwargs):
+        if version not in self.SUPPORT_VERSIONS:
+            raise ValueError('{} version is not supported'.format(version))
+        self.version = version
 
-        super(IPAddredssField, self).__init__(**kwargs)
+        kwargs.setdefault('strict', False)
+        super(IPAddressField, self).__init__(**kwargs)
 
     def _validate(self, value):
+        try:
+            value = IP(value)
+        except ValueError as e:
+            raise exceptions.FieldValidationError(str(e))
+        if self.version == 'ipv4' and value.version() != 4:
+            raise exceptions.FieldValidationError(
+                'expected an ipv4 address, got {}'.format(value.strNormal()))
+        if self.version == 'ipv6' and value.version() != 6:
+            raise exceptions.FieldValidationError(
+                'expected an ipv6 address, got {}'.format(value.strNormal()))
         return value
 
-    def _validate_ipv4(self, value):
-        pass
-
-    def _validate_ipv6(self, value):
-        pass
+    def to_presentation(self, value):
+        return value.strNormal()
 
     def mock_data(self):
-        return None
+        v = self.version
+        if v == 'both':
+            v = random.choice(['ipv4', 'ipv6'])
+
+        if v == 'ipv4':
+            ip = random.randint(0, MAX_IPV4_ADDRESS)
+            return IP(ip)
+        else:
+            ip = random.randint(0, MAX_IPV6_ADDRESS)
+            return IP(ip)
+
+
+class URLField(StringField):
+    FIELD_TYPE_NAME = 'url'
+    SCHEMAS = ('http', 'http')
+
+    def __init__(self, **kwargs):
+
+        super(URLField, self).__init__(min_length=0, **kwargs)
+
+    def _validate(self, value):
+        value = self._validate_type(value)
+        url = urlparse.urlparse(value)
+        if url.scheme not in self.SCHEMAS:
+            raise exceptions.FieldValidationError('schema is lost')
+        if url.hostname == '':
+            raise exceptions.FieldValidationError('hostname is lost')
+        return url.geturl()
+
+    def mock_data(self):
+        return 'http://www.example.com/media/image/demo.jpg'
 
 
 class EnumField(BaseField):

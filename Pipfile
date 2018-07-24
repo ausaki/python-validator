@@ -17,6 +17,7 @@ ipython = "*"
 
 [packages]
 six = "*"
+ipy = "*"
 
 [requires]
 python_version = "2.7"
