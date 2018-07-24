@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 class BaseValidationError(Exception):
 
     default_detail = 'Base validation error'
@@ -10,22 +9,25 @@ class BaseValidationError(Exception):
         self.code = code if code else self.default_code
     
     def __str__(self):
-        return '({code}, {detail})'.format(code=self.code, detail=self.detail)
+        return self.detail
+    
+    def __repr__(self):
+        return '<{}>'.format(self.__class__.__name__)
 
 
-class FieldRequiredError(Exception):
+class FieldRequiredError(BaseValidationError):
 
     default_detail = 'Field is required'
     default_code = 'error'
 
 
-class ValidationError(Exception):
+class ValidationError(BaseValidationError):
 
     default_detail = 'Validation error'
     default_code = 'error'
 
 
-class FieldValidationError(Exception):
+class FieldValidationError(BaseValidationError):
 
     default_detail = 'field Validation error'
     default_code = 'error'

@@ -40,3 +40,6 @@ pip-delete-this-directory.txt
 # editors config
 .vscode/
 .idea/
+
+# mkdocs
+docs/site

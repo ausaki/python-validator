@@ -5,6 +5,8 @@ name = "pypi"
 
 [scripts]
 test = 'pytest tests'
+serve_doc = 'mkdocs serve -a 127.0.0.1:8010'
+build_doc = 'mkdocs build'
 
 [dev-packages]
 mkdocs = "*"
