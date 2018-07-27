@@ -1,4 +1,4 @@
-# 快速入门
+# python-validator
 
 python-validator 是一个类似于 Django ORM 的数据校验库，对于熟悉 Django 的开发人员非常友好。
 

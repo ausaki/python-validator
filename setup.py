@@ -14,17 +14,44 @@ def read_meta():
     }
 
 
+def readme():
+    with open('./README.md') as fp:
+        content = fp.read()
+    return content
+
+
 meta = read_meta()
 
 setup(
     name='python-validator',
-    description="a data validator like Django ORM",
     version=meta['version'],
     author='ausaki',
     author_email='ljm51689@gmail.com',
-    url="http://github.com/theskumar/python-dotenv",
-    keywords=['validator', 'Django-ORM',
+    description="a data validator like Django ORM",
+    long_description=readme(),
+    long_description_content_type='text/markdown',
+    url="http://github.com/ausaki/python-validator",
+    keywords=['validator', 'like Django-ORM',
               'data validator', 'validation', 'python'],
-    packages=find_packages(),
-    install_requires=['six'],
+    packages=['validator'],
+    python_requires='>=2.6',
+    install_requires=['six', 'IPy'],
+    license='MIT',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Operating System :: OS Independent',
+        'Intended Audience :: Developers',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Topic :: Software Development :: Libraries',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+    ],
 )

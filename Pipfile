@@ -5,16 +5,20 @@ name = "pypi"
 
 [scripts]
 test = 'pytest tests'
+build = 'python setup.py sdist bdist_wheel'
+publish = 'twine upload -r pypi dist/*'
+publish_test = 'twine upload -r test dist/*'
 serve_doc = 'mkdocs serve -a 127.0.0.1:8010'
 build_doc = 'mkdocs build'
+publish_doc = 'mkdocs build'
 
 [dev-packages]
 mkdocs = "*"
 pytest = "*"
 python-validator = {path = ".", editable = true}
 "autopep8" = "*"
-ipython = "*"
 mkdocs-material = "*"
+twine = "*"
 
 [packages]
 six = "*"

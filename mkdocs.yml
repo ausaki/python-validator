@@ -2,7 +2,7 @@ site_name: python-validator
 theme:
     name: material
 pages:
-  - 快速入门: index.md
+  - 首页: index.md
   - 进阶用法: advanced.md
   - 字段:
     - 字段 API: fields.md
