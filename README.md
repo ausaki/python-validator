@@ -2,8 +2,6 @@
 
 python-validator 是一个类似于 Django ORM 的数据校验库，对于熟悉 Django 的开发人员非常友好。
 
-本篇文档 将会介绍 python-validator 的各种基础用法和高级功能。
-
 - [在线文档](https://ausaki.github.io/python-validator/)
 
 - [更新记录](https://ausaki.github.io/python-validator/history/)
