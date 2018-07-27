@@ -1,4 +1,4 @@
-# python-validator 文档
+# 快速入门
 
 python-validator 是一个类似于 Django ORM 的数据校验库，对于熟悉 Django 的开发人员非常友好。
 
@@ -144,11 +144,7 @@ validated_data: None
 
 细心的同学可能发现了 `IntegerField` 不接受“数字字符串”，上面的例子中 `age` 是一个 `IntegerField`，形如`'24'`这样的值是非法的。在某些情况下，你可能希望 `IntegerField` 不要这么严格，`'24'`这样的值也是可以接受的，那么可以把`strict`选项设为 `False`，如：`age = IntegerField(min_value=1, max_value=120, default=20, strict=False)`。当`strict`选项为 `False`时，python-validator 会尝试进行类型转换，假如转换失败则会报错。
 
-
-## 进阶
-
-
-## 字段 API
+接下来你可以[查看进阶](advanced.md)了解 python-validator 更多的用法，[查看字段 API](fields.md)了解字段的详细信息。
 
 
 

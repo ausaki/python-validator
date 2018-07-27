@@ -1,19 +1,15 @@
 from validator import Validator, NumberField, IntegerField, FloatField
 
-
-def test_ok():
-    class V(Validator):
+class V(Validator):
         number = NumberField()
 
+def test_ok():
     data = {'number': 10}
     v = V(data)
     assert v.is_valid()
 
 
 def test_wrong_type():
-    class V(Validator):
-        number = NumberField()
-
     data = {'number': '10'}
     v = V(data)
     assert not v.is_valid()
@@ -44,9 +40,18 @@ def test_range():
 
 
 def test_mock_data():
-    class V(Validator):
-        number = NumberField()
-
     data = V.mock_data()
     assert 'number' in data
     assert V(data).is_valid()
+
+
+
+def test_to_dict():
+    data_dict = V.to_dict()
+    assert 'number' in data_dict
+    field_info = data_dict['number']
+    for p in NumberField.PARAMS:
+        assert p in field_info
+    assert field_info['type'] == NumberField.FIELD_TYPE_NAME
+    assert field_info['min_value'] is None
+    assert field_info['max_value'] is None

@@ -48,6 +48,15 @@ def test_mock_data():
     assert 'height' in data['rectangle']
 
 
+def test_to_dict():
+    data_dict = ShapeValidator.to_dict()
+    assert 'rectangle' in data_dict
+    field_info = data_dict['rectangle']
+    for p in DictField.PARAMS:
+        assert p in field_info
+    assert field_info['type'] == DictField.FIELD_TYPE_NAME
+
+
 def test_no_validator():
     class ShapeValidator(Validator):
         rectangle = DictField()

@@ -14,6 +14,7 @@ pytest = "*"
 python-validator = {path = ".", editable = true}
 "autopep8" = "*"
 ipython = "*"
+mkdocs-material = "*"
 
 [packages]
 six = "*"

@@ -7,6 +7,7 @@ import uuid
 import re
 import copy
 import datetime
+from collections import OrderedDict
 try:
     import urlparse
 except ImportError:
@@ -47,6 +48,9 @@ class EmptyValue(object):
 
     def __str__(self):
         return '__empty_value__'
+
+    def __repr__(self):
+        return '<{}>'.format(self.__class__.__name__)
 
 
 EMPTY_VALUE = EmptyValue()
@@ -112,14 +116,28 @@ class BaseField(object):
             value = self.INTERNAL_TYPE(value)
         return value
 
-    @property
-    def _params(self):
-        params = {}
-        for name in self.PARAMS:
-            if hasattr(self, name):
-                params[name] = getattr(self, name)
+    @classmethod
+    def _get_all_params(cls):
+        """
+        Collect all PARAMS from this class and its parent class.
+        """
+        params = []
+        parent_cls = cls
+        while issubclass(parent_cls, BaseField):
+            params.extend(parent_cls.PARAMS)
+            bases = parent_cls.__bases__
+            parent_cls = bases[0]
         return params
 
+    @property
+    def _params_and_values(self):
+        params = self._get_all_params()
+        params_and_values = {}
+        for name in params:
+            if hasattr(self, name):
+                params_and_values[name] = getattr(self, name)
+        return params_and_values
+    
     def validate(self, value):
         """
         return validated value or raise FieldValidationError.
@@ -183,7 +201,7 @@ class BaseField(object):
         d = {
             'type': self.FIELD_TYPE_NAME,
         }
-        d.update(self._params)
+        d.update(self._params_and_values)
         return d
 
     def mock_data(self):
@@ -204,8 +222,8 @@ class StringField(BaseField):
         INTERNAL_TYPE = (unicode, str)
     else:
         INTERNAL_TYPE = str
-
     FIELD_TYPE_NAME = 'string'
+    PARAMS = ['min_length', 'max_length', 'regex']
 
     def __init__(self, min_length=0, max_length=None, regex=None, **kwargs):
         if min_length < 0:
@@ -262,8 +280,8 @@ class NumberField(BaseField):
         INTERNAL_TYPE = (int, long, float)
     else:
         INTERNAL_TYPE = (int, float)
-
     FIELD_TYPE_NAME = 'number'
+    PARAMS = ['min_value', 'max_value']
 
     def __init__(self, min_value=None, max_value=None, **kwargs):
         self._check_value_range(min_value, max_value)
@@ -297,8 +315,8 @@ class NumberField(BaseField):
 
 class IntegerField(NumberField):
     INTERNAL_TYPE = int
-
     FIELD_TYPE_NAME = 'integer'
+    PARAMS = []
 
     def mock_data(self):
         d = super(IntegerField, self).mock_data()
@@ -307,21 +325,23 @@ class IntegerField(NumberField):
 
 class FloatField(NumberField):
     INTERNAL_TYPE = float
-
     FIELD_TYPE_NAME = 'float'
+    PARAMS = []
 
 
 class BoolField(BaseField):
     INTERNAL_TYPE = bool
     FIELD_TYPE_NAME = 'bool'
+    PARAMS = []
 
-    def mock_data(self, value):
+    def mock_data(self):
         return random.choice([True, False])
 
 
 class UUIDField(BaseField):
     INTERNAL_TYPE = uuid.UUID
     FIELD_TYPE_NAME = 'UUID'
+    PARAMS = ['format']
     SUPPORT_FORMATS = {
         'hex': 'hex',
         'str': '__str__',
@@ -358,12 +378,14 @@ class UUIDField(BaseField):
 
 class MD5Field(StringField):
     FIELD_TYPE_NAME = 'md5'
+    PARAMS = []
+    REGEX = r'[\da-fA-F]{32}'
 
     def __init__(self, **kwargs):
         kwargs['strict'] = True
         super(MD5Field, self).__init__(min_length=32,
                                        max_length=32,
-                                       regex=r'[\da-fA-F]{32}',
+                                       regex=self.REGEX,
                                        **kwargs)
 
     def _validate(self, value):
@@ -380,6 +402,7 @@ class MD5Field(StringField):
 class SHAField(StringField):
     FIELD_TYPE_NAME = 'sha'
     SUPPORT_VERSION = [1, 224, 256, 384, 512]
+    PARAMS = ['version']
 
     def __init__(self, version=256, **kwargs):
         if version not in self.SUPPORT_VERSION:
@@ -412,6 +435,7 @@ class SHAField(StringField):
 class EmailField(StringField):
     FIELD_TYPE_NAME = 'email'
     REGEX = r'^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'
+    PARAMS = []
 
     def __init__(self, **kwargs):
         kwargs['strict'] = True
@@ -433,6 +457,7 @@ class EmailField(StringField):
 class IPAddressField(BaseField):
     INTERNAL_TYPE = IP
     FIELD_TYPE_NAME = 'ip_address'
+    PARAMS = ['version']
     SUPPORT_VERSIONS = ['ipv4', 'ipv6', 'both']
 
     def __init__(self, version='both', **kwargs):
@@ -474,10 +499,11 @@ class IPAddressField(BaseField):
 
 class URLField(StringField):
     FIELD_TYPE_NAME = 'url'
+    PARAMS = []
     SCHEMAS = ('http', 'http')
-
+    
     def __init__(self, **kwargs):
-
+        kwargs['strict'] = True
         super(URLField, self).__init__(min_length=0, **kwargs)
 
     def _validate(self, value):
@@ -494,8 +520,9 @@ class URLField(StringField):
 
 
 class EnumField(BaseField):
-    INTERNAL_TYPE = (list, tuple)
+    INTERNAL_TYPE = object
     FIELD_TYPE_NAME = 'enum'
+    PARAMS = ['choices']
 
     def __init__(self, choices=None, **kwargs):
         if choices is None or len(choices) == 0:
@@ -517,6 +544,7 @@ class EnumField(BaseField):
 class DictField(BaseField):
     INTERNAL_TYPE = dict
     FIELD_TYPE_NAME = 'dict'
+    PARAMS = ['validator']
 
     def __init__(self, validator=None, **kwargs):
         """
@@ -548,8 +576,11 @@ class DictField(BaseField):
 class ListField(BaseField):
     INTERNAL_TYPE = (list, tuple)
     FIELD_TYPE_NAME = 'list'
+    PARAMS = ['field', 'min_length', 'max_length']
 
-    def __init__(self, field=None, min_length=None, max_length=None, **kwargs):
+    def __init__(self, field=None, min_length=0, max_length=None, **kwargs):
+        if field is not None and not isinstance(field, BaseField):
+            raise ValueError('field param expect a instance of BaseField, but got {!r}'.format(field))
         self.field = field
 
         self._check_value_range(min_length, max_length)
@@ -596,6 +627,7 @@ class ListField(BaseField):
 
 class TimestampField(IntegerField):
     FIELD_TYPE_NAME = 'timestamp'
+    PARAMS = []
 
     def __init__(self, **kwargs):
         super(TimestampField, self).__init__(
@@ -612,12 +644,14 @@ class TimestampField(IntegerField):
 class DatetimeField(BaseField):
     INTERNAL_TYPE = datetime.datetime
     FIELD_TYPE_NAME = 'datetime'
+    PARAMS = ['dt_format', 'tzinfo']
     DEFAULT_FORMAT = '%Y/%m/%d %H:%M:%S'
+    
 
     def __init__(self, dt_format=None, tzinfo=None, **kwargs):
         if dt_format is None:
             dt_format = self.DEFAULT_FORMAT
-        self.format = dt_format
+        self.dt_format = dt_format
         self.tzinfo = tzinfo
         kwargs.setdefault('strict', False)
         super(DatetimeField, self).__init__(**kwargs)
@@ -629,7 +663,7 @@ class DatetimeField(BaseField):
                 value = int(value)
                 return self.INTERNAL_TYPE.fromtimestamp(value, tz=self.tzinfo)
             else:
-                dt = self.INTERNAL_TYPE.strptime(value, self.format)
+                dt = self.INTERNAL_TYPE.strptime(value, self.dt_format)
                 if self.tzinfo:
                     dt = dt.astimezone(self.tzinfo)
                 return dt
@@ -643,7 +677,7 @@ class DatetimeField(BaseField):
         return copy.copy(value)
 
     def to_presentation(self, value):
-        return value.strftime(self.format)
+        return value.strftime(self.dt_format)
 
     def mock_data(self):
         return self.INTERNAL_TYPE.fromtimestamp(random.randint(0, 2 ** 32 - 1))
@@ -652,12 +686,13 @@ class DatetimeField(BaseField):
 class DateField(BaseField):
     INTERNAL_TYPE = datetime.date
     FIELD_TYPE_NAME = 'date'
+    PARAMS = ['dt_format']
     DEFAULT_FORMAT = '%Y/%m/%d'
-
+    
     def __init__(self, dt_format=None, **kwargs):
         if dt_format is None:
             dt_format = self.DEFAULT_FORMAT
-        self.format = dt_format
+        self.dt_format = dt_format
         kwargs.setdefault('strict', False)
         super(DateField, self).__init__(**kwargs)
 
@@ -668,7 +703,7 @@ class DateField(BaseField):
                 value = int(value)
                 return self.INTERNAL_TYPE.fromtimestamp(value)
             else:
-                dt = datetime.datetime.strptime(value, self.format)
+                dt = datetime.datetime.strptime(value, self.dt_format)
                 return dt.date()
         elif isinstance(value, six.integer_types):
             return self.INTERNAL_TYPE.fromtimestamp(value)
@@ -680,7 +715,7 @@ class DateField(BaseField):
         return copy.copy(value)
 
     def to_presentation(self, value):
-        return value.strftime(self.format)
+        return value.strftime(self.dt_format)
 
     def mock_data(self):
         return self.INTERNAL_TYPE.fromtimestamp(random.randint(0, 2 ** 32 - 1))

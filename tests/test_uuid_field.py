@@ -2,40 +2,42 @@ import pytest
 import uuid
 from validator import Validator, UUIDField
 
-
-def test_ok():
-    class V(Validator):
+class V(Validator):
         uid = UUIDField()
 
+def test_ok():
     data = {'uid': '0'*32}
     v = V(data)
     assert v.is_valid()
 
 
 def test_wrong_value():
-    class V(Validator):
-        uid = UUIDField()
-
     data = {'uid': '0'*10}
     v = V(data)
     assert not v.is_valid()
 
 
 def test_uuid_obj():
-    class V(Validator):
-        uid = UUIDField()
     data = {'uid': uuid.uuid4()}
     v = V(data)
     assert v.is_valid()
 
 
 def test_mock_data():
-    class V(Validator):
-        uid = UUIDField()
-
     data = V.mock_data()
     assert 'uid' in data
     assert V(data).is_valid()
+
+
+def test_to_dict():
+    data_dict = V.to_dict()
+    assert 'uid' in data_dict
+    field_info = data_dict['uid']
+    for p in UUIDField.PARAMS:
+        assert p in field_info
+    assert field_info['type'] == UUIDField.FIELD_TYPE_NAME
+    assert field_info['strict'] == False
+    assert field_info['format'] == 'hex'
 
 
 def test_presentation():

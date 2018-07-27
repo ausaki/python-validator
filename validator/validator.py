@@ -34,6 +34,9 @@ class Validator(object):
     """
 
     def __init__(self, raw_data):
+        """
+        :param raw_data: unvalidate data
+        """
         assert isinstance(raw_data, dict)
         self.raw_data = raw_data
         self.validated_data = None
@@ -55,7 +58,7 @@ class Validator(object):
             try:
                 validated_value = field.validate(value)
                 internal_value = field.to_internal(validated_value)
-                field_validator = getattr(self, 'validator_{}'.format(name), None)
+                field_validator = getattr(self, 'validate_{}'.format(name), None)
                 if field_validator and callable(field_validator):
                     field_validator(internal_value)
                 data[name] = internal_value
@@ -87,7 +90,7 @@ class Validator(object):
     
     @property
     def str_errors(self):
-        errors = {}
+        errors = dict()
         for name, error in six.iteritems(self.errors):
             errors[name] = str(error)
         return errors
@@ -97,7 +100,7 @@ class Validator(object):
         """
         format Validator to dict 
         """
-        d = {}
+        d = dict()
         for name, field in six.iteritems(cls._FIELDS_MAP):
             d[name] = field.to_dict()
         return d

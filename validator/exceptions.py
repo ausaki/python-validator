@@ -12,7 +12,10 @@ class BaseValidationError(Exception):
         return self.detail
     
     def __repr__(self):
-        return '<{}>'.format(self.__class__.__name__)
+        detail = self.detail
+        if len(detail) > 103:
+            detail = detail[:100] + '...'
+        return '<{0}: {1}>'.format(self.__class__.__name__, detail)
 
 
 class FieldRequiredError(BaseValidationError):

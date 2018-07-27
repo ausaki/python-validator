@@ -1,3 +1,13 @@
 site_name: python-validator
+theme:
+    name: material
 pages:
-  - Home: index.md
+  - 快速入门: index.md
+  - 进阶用法: advanced.md
+  - 字段:
+    - 字段 API: fields.md
+    - 自定义字段: custom_field.md
+  - 异常: exceptions.md
+  - 关于:
+    - 历史版本: history.md
+    - LICENSE: license.md
