@@ -23,6 +23,7 @@ twine = "*"
 [packages]
 six = "*"
 ipy = "*"
+pytz = "*"
 
 [requires]
 python_version = "2.7"

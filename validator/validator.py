@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import six
-from collections import OrderedDict
 from . import exceptions
-from .fields import BaseField, EMPTY_VALUE
+from .fields import BaseField, EMPTY_VALUE, create_field, DictField
 
 
 class ValidatorMetaClass(type):
 
     def __new__(cls, name, bases, attrs):
-        fields_map = OrderedDict()
-        parent_fields_map = OrderedDict()
+        fields_map = dict()
+        parent_fields_map = dict()
         for parent in bases:
             if hasattr(parent, '_FIELDS_MAP'):
                 parent_fields_map.update(parent._FIELDS_MAP)
@@ -20,7 +20,7 @@ class ValidatorMetaClass(type):
 
         for name in fields_map:
             attrs.pop(name, None)
-        
+
         parent_fields_map.update(fields_map)
 
         attrs['_FIELDS_MAP'] = parent_fields_map
@@ -58,7 +58,8 @@ class Validator(object):
             try:
                 validated_value = field.validate(value)
                 internal_value = field.to_internal(validated_value)
-                field_validator = getattr(self, 'validate_{}'.format(name), None)
+                field_validator = getattr(
+                    self, 'validate_{}'.format(name), None)
                 if field_validator and callable(field_validator):
                     field_validator(internal_value)
                 data[name] = internal_value
@@ -87,12 +88,12 @@ class Validator(object):
         sub-class can override this method to validate data, return modified data
         """
         return data
-    
+
     @property
     def str_errors(self):
         errors = dict()
         for name, error in six.iteritems(self.errors):
-            errors[name] = str(error)
+            errors[name] = error.get_detail()
         return errors
 
     @classmethod
@@ -102,7 +103,8 @@ class Validator(object):
         """
         d = dict()
         for name, field in six.iteritems(cls._FIELDS_MAP):
-            d[name] = field.to_dict()
+            field_info = field.to_dict()
+            d[name] = field_info
         return d
 
     @classmethod
@@ -115,4 +117,39 @@ class Validator(object):
         for name, field in six.iteritems(cls._FIELDS_MAP):
             mocking_data[name] = field.mock_data()
         return mocking_data
-    
+
+    def _format(self):
+        fields = []
+        for name, field in six.iteritems(self._FIELDS_MAP):
+            fields.append('{0}:{1}'.format(name, field.FIELD_TYPE_NAME))
+        fields = ','.join(fields)
+        if len(fields) > 103:
+            fields = fields[:100]
+        return '<{0}: {1}>'.format(self.__class__.__name__, fields)
+
+    def __str__(self):
+        return self._format()
+
+    def __repr__(self):
+        return self._format()
+
+
+def create_validator(data_struct_dict, name=None):
+    """
+    create a Validator instance from data_struct_dict
+
+    :param data_struct_dict: a dict describe validator's fields, like the dict `to_dict()` method returned.
+    :param name: name of Validator class 
+
+    :return: Validator instance
+    """
+
+    if name is None:
+        name = 'FromDictValidator'
+    attrs = {}
+    for name, info in six.iteritems(data_struct_dict):
+        field_type = info['type']
+        if field_type == DictField.FIELD_TYPE_NAME and isinstance(info.get('validator'), dict):
+            info['validator'] = create_validator(info['validator'])
+        attrs[name] = create_field(info)
+    return type(name, (Validator, ), attrs)

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import six
 import random
 import string
@@ -14,28 +15,31 @@ except ImportError:
     import urllib.parse as urlparse
 from IPy import IP, MAX_IPV4_ADDRESS, MAX_IPV6_ADDRESS
 from . import exceptions
+from .utils import force_text
 
 
 __all__ = [
-    'BaseField',
-    'StringField',
-    'NumberField',
-    'IntegerField',
-    'FloatField',
-    'BoolField',
-    'UUIDField',
-    'MD5Field',
-    'SHAField',
-    'EmailField',
-    'IPAddressField',
-    'URLField',
-    'EnumField',
-    'DictField',
-    'ListField',
-    'TimestampField',
-    'DatetimeField',
-    'DateField',
+    # Don't need to add field to here by hand,
+    # BaseFieldMetaClass will auto add field to here.
 ]
+
+FIELDS_NAME_MAP = {
+    # Don't need to add field to here by hand,
+    # BaseFieldMetaClass will auto add field to here.
+}
+
+
+def create_field(field_info):
+    """
+    Create a field by field info dict.
+    """
+    field_type = field_info.get('type')
+    if field_type not in FIELDS_NAME_MAP:
+        raise ValueError('not support this field: {}'.format(field_type))
+    field_class = FIELDS_NAME_MAP.get(field_type)
+    params = dict(field_info)
+    params.pop('type')
+    return field_class.from_dict(params)
 
 
 class EmptyValue(object):
@@ -56,6 +60,18 @@ class EmptyValue(object):
 EMPTY_VALUE = EmptyValue()
 
 
+class BaseFieldMetaClass(type):
+
+    def __new__(cls, name, bases, attrs):
+        __all__.append(name)
+        clazz = super(BaseFieldMetaClass, cls).__new__(cls, name, bases, attrs)
+        field_name = attrs.get('FIELD_TYPE_NAME')
+        if field_name is not None and field_name != 'object':
+            FIELDS_NAME_MAP[field_name] = clazz
+        return clazz
+
+
+@six.add_metaclass(BaseFieldMetaClass)
 class BaseField(object):
     """ 
     BaseField
@@ -121,23 +137,13 @@ class BaseField(object):
         """
         Collect all PARAMS from this class and its parent class.
         """
-        params = []
-        parent_cls = cls
-        while issubclass(parent_cls, BaseField):
-            params.extend(parent_cls.PARAMS)
-            bases = parent_cls.__bases__
-            parent_cls = bases[0]
+        params = list(cls.PARAMS)
+        bases = cls.__bases__
+        for base in bases:
+            if issubclass(base, BaseField):
+                params.extend(base._get_all_params())
         return params
 
-    @property
-    def _params_and_values(self):
-        params = self._get_all_params()
-        params_and_values = {}
-        for name in params:
-            if hasattr(self, name):
-                params_and_values[name] = getattr(self, name)
-        return params_and_values
-    
     def validate(self, value):
         """
         return validated value or raise FieldValidationError.
@@ -167,7 +173,7 @@ class BaseField(object):
                     value = self._convert_type(value)
                 except (ValueError, TypeError) as e:
                     raise exceptions.FieldValidationError(
-                        'type convertion is failed: {0} -> {1}'.format(type(value).__name__, self.FIELD_TYPE_NAME))
+                        'type convertion({0} -> {1}) is failed: {2}'.format(type(value).__name__, self.FIELD_TYPE_NAME, str(e)))
         return value
 
     def is_required(self):
@@ -201,8 +207,25 @@ class BaseField(object):
         d = {
             'type': self.FIELD_TYPE_NAME,
         }
-        d.update(self._params_and_values)
+        params = self._get_all_params()
+        for name in params:
+            if hasattr(self, name):
+                value = getattr(self, name)
+                # 处理特殊值
+                if value is EMPTY_VALUE:
+                    value = '__empty__'
+                d[name] = value
         return d
+
+    @classmethod
+    def from_dict(cls, params):
+        """
+        Create a field from params.
+        sub-class can override this method.
+        """
+        if params.get('default') == '__empty__':
+            params['default'] = EMPTY_VALUE
+        return cls(**params)
 
     def mock_data(self):
         """
@@ -501,7 +524,7 @@ class URLField(StringField):
     FIELD_TYPE_NAME = 'url'
     PARAMS = []
     SCHEMAS = ('http', 'http')
-    
+
     def __init__(self, **kwargs):
         kwargs['strict'] = True
         super(URLField, self).__init__(min_length=0, **kwargs)
@@ -565,6 +588,12 @@ class DictField(BaseField):
         else:
             value = copy.deepcopy(value)
         return value
+    
+    def to_dict(self):
+        d = super(DictField, self).to_dict()
+        if d['validator'] is not None:
+            d['validator'] = d['validator'].to_dict()
+        return d
 
     def mock_data(self):
         if self.validator:
@@ -580,7 +609,8 @@ class ListField(BaseField):
 
     def __init__(self, field=None, min_length=0, max_length=None, **kwargs):
         if field is not None and not isinstance(field, BaseField):
-            raise ValueError('field param expect a instance of BaseField, but got {!r}'.format(field))
+            raise ValueError(
+                'field param expect a instance of BaseField, but got {!r}'.format(field))
         self.field = field
 
         self._check_value_range(min_length, max_length)
@@ -608,6 +638,18 @@ class ListField(BaseField):
         else:
             value = copy.deepcopy(value)
         return value
+
+    def to_dict(self):
+        d = super(ListField, self).to_dict()
+        if d['field'] is not None:
+            d['field'] = d['field'].to_dict()
+        return d
+
+    @classmethod
+    def from_dict(cls, params):
+        if 'field' in params and isinstance(params['field'], dict):
+            params['field'] = create_field(params['field'])
+        return super(ListField, cls).from_dict(params)
 
     def mock_data(self):
         min_ = self.min_length
@@ -646,7 +688,6 @@ class DatetimeField(BaseField):
     FIELD_TYPE_NAME = 'datetime'
     PARAMS = ['dt_format', 'tzinfo']
     DEFAULT_FORMAT = '%Y/%m/%d %H:%M:%S'
-    
 
     def __init__(self, dt_format=None, tzinfo=None, **kwargs):
         if dt_format is None:
@@ -665,12 +706,12 @@ class DatetimeField(BaseField):
             else:
                 dt = self.INTERNAL_TYPE.strptime(value, self.dt_format)
                 if self.tzinfo:
-                    dt = dt.astimezone(self.tzinfo)
+                    dt = dt.replace(tzinfo=self.tzinfo)
                 return dt
         elif isinstance(value, six.integer_types):
             return self.INTERNAL_TYPE.fromtimestamp(value, tz=self.tzinfo)
         else:
-            raise ValueError()
+            raise ValueError('Got wrong datetime value: {}'.format(value))
 
     def _validate(self, value):
         value = self._validate_type(value)
@@ -678,6 +719,22 @@ class DatetimeField(BaseField):
 
     def to_presentation(self, value):
         return value.strftime(self.dt_format)
+
+    def to_dict(self):
+        d = super(DatetimeField, self).to_dict()
+        if d['tzinfo'] is not None:
+            d['tzinfo'] = force_text(d['tzinfo'])
+        return d
+
+    @classmethod
+    def from_dict(cls, params):
+        if 'tzinfo' in params and isinstance(params['tzinfo'], six.string_types):
+            try:
+                import pytz
+            except ImportError as e:
+                raise ValueError('Cant create DatetimeField instance with tzinfo {}, please install pytz and try again'.format(params['tzinfo']))
+            params['tzinfo'] = pytz.timezone(params['tzinfo'])
+        return super(DatetimeField, cls).from_dict(params)
 
     def mock_data(self):
         return self.INTERNAL_TYPE.fromtimestamp(random.randint(0, 2 ** 32 - 1))
@@ -688,7 +745,7 @@ class DateField(BaseField):
     FIELD_TYPE_NAME = 'date'
     PARAMS = ['dt_format']
     DEFAULT_FORMAT = '%Y/%m/%d'
-    
+
     def __init__(self, dt_format=None, **kwargs):
         if dt_format is None:
             dt_format = self.DEFAULT_FORMAT

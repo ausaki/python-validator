@@ -1,4 +1,4 @@
-from validator import Validator, DictField, IntegerField
+from validator import Validator, DictField, IntegerField, create_validator
 
 
 class RectangleValidator(Validator):
@@ -70,3 +70,33 @@ def test_no_validator():
 
     data['rectangle']['width'] = 20
     assert validated_data['rectangle']['width'] != 20
+
+def test_create_valiadtor():
+    data = {
+        'rectangle': {
+            'type': 'dict',
+            'validator': {
+                'width': {
+                    'type': 'integer',
+                    'default': '__empty__'
+                },
+                'height': {
+                    'type': 'integer',
+                }
+            },
+        }
+    }
+    V = create_validator(data)
+    assert issubclass(V, Validator)
+
+    data = {'rectangle': {'height': 50}}
+    v = V(data)
+    assert v.is_valid(), v.str_errors
+
+def test_errors():
+    data = {'rectangle': {'width': '10', 'height': 50}}
+    v = ShapeValidator(data)
+    assert not v.is_valid()
+    print v.errors
+    print v.str_errors
+    

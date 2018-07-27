@@ -12,11 +12,11 @@
 
 - 如有必要的话，覆盖 `__init__` 方法，记得调用父类的 `__init__` 方法。
 
-- 实现`_validate(self, value)`方法，该方法用于验证数据，验证通过则返回数据，验证失败则抛出异常`FieldValidationError`。注意：如果原始数据是可变类型（如 list，dict），则最好返回原始数据的拷贝，以防止篡改数据。
+- 实现 `_validate(self, value)` 方法，该方法用于验证数据，验证通过则返回数据，验证失败则抛出异常 `FieldValidationError`。注意：如果原始数据是可变类型（如 list，dict），则最好返回原始数据的拷贝，以防止篡改数据。
 
-    在`_validate`方法中，可以调用`_validate_type(self, value)` 验证参数类型。
+    在 `_validate` 方法中，可以调用 `_validate_type(self, value)` 验证参数类型。
 
-- 实现`mock_data(self)`方法，返回用于测试的假数据。
+- 实现 `mock_data(self)` 方法，返回用于测试的假数据。
 
 ## 例子
 

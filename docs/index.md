@@ -28,13 +28,13 @@ python-validator 适用与任何需要进行数据校验的应用，比较常见
 
 ## 快速入门
 
-假设现在正在开发一个上传用户信息的接口`POST /api/user/`，用户信息如下：
+假设现在正在开发一个上传用户信息的接口 `POST /api/user/`，用户信息如下：
 
-|字段|类型|描述|
+| 字段 | 类型 | 描述 |
 |--|--|--|
-|name|String| 必选|
-|age|integer| 可选，默认20|
-|sex|String, 'f'表示女, 'm'表示男|可选, 默认 None|
+|name|String| 必选 |
+|age|integer| 可选，默认 20|
+|sex|String, 'f'表示女, 'm'表示男 | 可选, 默认 None|
 
 原始的、枯燥无味的、重复性劳动的数据校验代码可能是下面这样：
 
@@ -51,15 +51,15 @@ def user(request):
 
     if name is None or len(name) == 0:
         return Response('必须提供 name', status=400)
-    
+
     try:
         age = int(age)
     except ValueError as e:
         return Response('age 格式错误', status=400)
-    
+
     if sex is not None and sex not in ('f', 'm'):
         return Response('sex 格式错误', status=400)
-    
+
     user_info = {
         'name': name,
         'age': age,
@@ -74,9 +74,9 @@ def user(request):
 
 - 从数据校验的代码无法轻易看出用户信息的数据结构，即字段是什么类型的，是否可选，默认值是什么。
 
-**使用 python-validator 校验数据**
+** 使用 python-validator 校验数据 **
 
-首先定义一个 UserInfoValidator类
+首先定义一个 UserInfoValidator 类
 
 ```python
 # validators.py
@@ -88,7 +88,7 @@ class UserInfoValidator(Validator):
     sex = EnumField(choices=['f', 'm'])
 ```
 
-接下来使用`UserInfoValidator`进行数据校验，
+接下来使用 `UserInfoValidator` 进行数据校验，
 
 ```python
 from .validators import UserInfoValidator
@@ -102,12 +102,12 @@ def user(request):
     v = UserInfoValidator(data)
     if not v.is_valid():
         return Response({'msg': v.str_errors, 'code': 400}, status=400)
-    
+
     user_info = v.validated_data
     ...
 ```
 
-`v.str_errors` 是一个字段名-错误信息的 dict，例如：
+`v.str_errors` 是一个字段名 - 错误信息的 dict，例如：
 
 ```python
 {'age': 'got a wrong type: str, expect integer', 'name': 'Field is required'}
@@ -117,7 +117,7 @@ def user(request):
 
 - `age` 等于 "24"，不是合法的 `int` 类型。
 
-- `name`是必须提供的，且没有指定默认值。
+- `name` 是必须提供的，且没有指定默认值。
 
 
 v.validated_data 是校验后合法的数据，例如：
@@ -142,9 +142,9 @@ errors: {'sex': "'c' not in the choices"}
 validated_data: None
 ```
 
-细心的同学可能发现了 `IntegerField` 不接受“数字字符串”，上面的例子中 `age` 是一个 `IntegerField`，形如`'24'`这样的值是非法的。在某些情况下，你可能希望 `IntegerField` 不要这么严格，`'24'`这样的值也是可以接受的，那么可以把`strict`选项设为 `False`，如：`age = IntegerField(min_value=1, max_value=120, default=20, strict=False)`。当`strict`选项为 `False`时，python-validator 会尝试进行类型转换，假如转换失败则会报错。
+细心的同学可能发现了 `IntegerField` 不接受 “数字字符串”，上面的例子中 `age` 是一个 `IntegerField`，形如 `'24'` 这样的值是非法的。在某些情况下，你可能希望 `IntegerField` 不要这么严格，`'24'` 这样的值也是可以接受的，那么可以把 `strict` 选项设为 `False`，如：`age = IntegerField(min_value=1, max_value=120, default=20, strict=False)`。当 `strict` 选项为 `False` 时，python-validator 会尝试进行类型转换，假如转换失败则会报错。
 
-接下来你可以[查看进阶](advanced.md)了解 python-validator 更多的用法，[查看字段 API](fields.md)了解字段的详细信息。
+接下来你可以 [查看进阶](advanced.md) 了解 python-validator 更多的用法，[查看字段 API](fields.md)了解字段的详细信息。
 
 
 

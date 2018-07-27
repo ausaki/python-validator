@@ -1,6 +1,34 @@
 # 字段 API
 
-下面将要介绍 python-validator 中所有的字段，
+下面将要介绍 python-validator 中所有的字段。
+
+---
+
+## 模块属性
+
+- `FIELDS_NAME_MAP`
+
+     所有字段名称和字段类的映射关系，例如:
+
+```python
+{
+    'string': StringField,
+    'integer': IntegerField,
+    ...
+}
+```
+
+---
+
+
+## 模块方法
+
+- `create_field(field_info)`
+
+    根据 `field_info` 创建一个字段实例，`field_info` 是一个字典，例如 `string_field.to_dict()` 的返回值。
+
+    一般不会直接使用到该方法，如果想要通过数据结构字典创建 `Validator`，请查看[通过数据结构字典创建 Validator](advanced.md#validator_1)。
+
 
 
 ## BaseField
@@ -9,37 +37,37 @@
 
 - `__init__(self, strict=True, default=EMPTY_VALUE, validators=None, required=False, **kwargs)`
 
-    - strict
+    - `strict`
 
         bool 类型，是否采用严格类型校验。当 `strict = True` 时，值必须是该字段类型的实例，即 `isinstance(value, INTERNAL_TYPE)`，否则发生异常 `FieldValidationError('got a wrong type: {0}, expect {1}')`。 当 `strict = False` 时，如果值不是字段类型的实例，会尝试进行类型转换，假如转换失败发生异常 `FieldValidationError('type convertion is failed: {0} -> {1}')`
 
-    - default
+    - `default`
 
         字段的默认值。`default` 默认为 `EMPTY_VALUE`， `EMPTY_VALUE` 是 python-validator 内部使用的一个空值，以区别 None。当待校验数据中缺失该字段时，使用 `default` 。 python-validator 会对 `default` 进行校验（除非 `default` 等于 `EMPTY_VALUE` 或者 `None`），所以请提供合法的 `default`。
 
-    - required
+    - `required`
 
         bool 类型，字段是否是必须的。如果该字段是必须的且没有指定默认值，会导致异常 `FieldRequiredError`。
 
-    - validators
+    - `validators`
 
         列表类型，提供一组额外的校验器。validator 可以是函数或者其它可调用的对象，validator 接受一个参数，即字段值。函数的返回值无效，因此无法实现级联校验的效果（`value | validate(value) | validate(value)`）。不要在函数中修改字段值。
 
-    - kwargs
+    - `kwargs`
 
         目前未使用。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
         字段内部类型。可以是单个类型或者类型列表，例如 `StringField` 的 `INTERNAL_TYPE` 等于 `str`（in Python2）或者 `(str, unicode)`（in python3）
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
         字段类型名字。字符串形式的类型名字，主要是为了可读性和方便显示。
 
-    - PARAMS
+    - `PARAMS`
 
         参数名称列表。`PARAMS` 包含所有初始化方法所需的参数名称。例如 `BaseField` 的 `PARAMS` 等于 `['strict', 'default', 'validators', 'required']`
 
@@ -89,10 +117,15 @@
 
         将字段转换为字典形式，字典描述了该字段的类型和初始化参数。
 
+    - `from_dict(cls, params)`
+
+        从 `params` 创建一个字段实例。创建字段实例的代码就一句 `return cls(**params)`，如果想要实现更多自定义的创建过程，可以覆盖该方法。
+
     - `mock_data(self)`
 
         返回可用于测试的随机值。
 
+---
 
 ## StringField
 
@@ -100,37 +133,37 @@
 
 - `__init__(self, min_length=0, max_length=None, regex=None, **kwargs)`
 
-    - min_length
+    - `min_length`
 
         最小长度，以字节为单位。默认为 0，即允许空字符串。
 
-    - max_length
+    - `max_length`
 
         最大长度，以字节为单位。默认为 None，表示不限制最大长度。
 
-    - regex
+    - `regex`
 
         正则表达式，测试字符串是否匹配。使用 `re.match` 进行匹配。`regex` 可以是字符串或者经过 `re.compile` 的 `_sre.SRE_Pattern` 对象。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-        in Python2: (str, unicode)
+        in Python2: `(str, unicode)`
 
-        in Python3: str
+        in Python3: `str`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'string'
+        `'string'`
 
-    - PARAMS
+    - `PARAMS`
 
-        ['min_length', 'max_length', 'regex']
+        `['min_length', 'max_length', 'regex']`
 
 - 方法
 
@@ -138,39 +171,41 @@
 
         返回随机生成的一段字符串。字符串长度是一个随机值，介于 `min_length` 和 `max_length` 之间，如果 `max_length` 等于 `None`，则 `max_length = min_length + 100`。
 
+---
+
 ## NumberField
 
 普通数字字段，继承自 `BaseField`。
 
 - `__init__(self, min_value=None, max_value=None, **kwargs)`
 
-    - min_value
+    - `min_value`
 
         最小值。默认为 None，即不限制最小值。
 
-    - max_value
+    - `max_value`
 
         最大值。默认为 None，即不限制最大值。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-        in Python2: (int, long, float)
+        in Python2: `(int, long, float)`
 
-        in Python3: (int, float)
+        in Python3: `(int, float)`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'number'
+        `'number'`
 
-    - PARAMS
+    - `PARAMS`
 
-        ['min_value', 'max_value']
+        `['min_value', 'max_value']`
 
 - 方法
 
@@ -178,6 +213,7 @@
 
         返回随机生成的一个数字。数字介于 `min_value` 和 `max_value` 之间，如果 `min_value` 等于 `None`，则 `min_value = 0`，如果 `max_value` 等于 `None`，则 `max_value = min_value + 1000`。
 
+---
 
 ## IntegerField
 
@@ -186,16 +222,17 @@
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-        in Python2: (int, long)
+        in Python2: `(int, long)`
 
-        in Python3: int
+        in Python3: `int`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'int'
+        `'int'`
 
+---
 
 ## FloatField
 
@@ -203,18 +240,19 @@
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-        float
+        `float`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'float'
+        `'float'`
 
-    - PARAMS
+    - `PARAMS`
 
-        []
+        `[ ]`
 
+---
 
 ## BoolField
 
@@ -222,23 +260,25 @@ BoolField，继承自 `BaseField`。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-        bool
+        `bool`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'bool'
+        `'bool'`
 
-    - PARAMS
+    - `PARAMS`
 
-        []
+        `[ ]`
 
 - 方法
 
     - `mock_data(self)`
 
-        返回 True 或 False
+        返回 `True` 或 `False`
+
+---
 
 
 ## UUIDField
@@ -252,27 +292,27 @@ UUID 字段，继承自 `BaseField`。
 
 - `__init__(self, format='hex', **kwargs)`
 
-    - format
+    - `format`
 
         格式化类型，`to_presentation` 会用到。支持的 format 有：hex，str，int，bytes，bytes_le。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-       uuid.UUID
+       `uuid.UUID`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'UUID'
+        `'UUID'`
 
     - PARAMS
 
-        ['format']
+       ` ['format']`
 
 - 方法
 
@@ -280,6 +320,7 @@ UUID 字段，继承自 `BaseField`。
 
         返回由 `uuid.uuid4()` 随机生成的 `uuid.UUID` 实例。
 
+---
 
 ## MD5Field
 
@@ -293,19 +334,19 @@ MD5 字段，继承自 `StringField`。
 - `__init__(self, **kwargs)`
     覆盖父类初始化方法，`strict` 为 `True`，`min_length` 和 `max_length` 都等于 32。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `StringField`  或 `BaseField` 所需的参数。
 
 - 类属性
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'md5'
+        `'md5'`
 
-    - PARAMS
+    - `PARAMS`
 
-        []
+        `[ ]`
 
 - 方法
 
@@ -313,6 +354,7 @@ MD5 字段，继承自 `StringField`。
 
         返回随机生成的一段 md5 字符串。
 
+---
 
 ## SHAField
 
@@ -326,23 +368,23 @@ SHA 字段，继承自 `StringField`。
 
     覆盖父类初始化方法，`strict` 为 `True`，`min_length` 和 `max_length` 都等于对应 SHA 版本的长度，例如 SHA1 的 `min_length` 和 `max_length` 都等于 40。
 
-    - version
+    - `version`
 
         SHA 版本，支持的版本有：[1, 224, 256, 384, 512]
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `StringField`  或 `BaseField` 所需的参数。
 
 - 类属性
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'sha'
+       `'sha'`
 
-    - PARAMS
+    - `PARAMS`
 
-        []
+        `[ ]`
 
 - 方法
 
@@ -350,6 +392,7 @@ SHA 字段，继承自 `StringField`。
 
         返回随机生成的一段 sha 字符串。
 
+---
 
 ## EmailField
 
@@ -367,19 +410,19 @@ Email 字段，继承自 `StringField`。
 
     `r'^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'`
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `StringField` 或 `BaseField` 所需的参数。
 
 - 类属性
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'email'
+        `'email'`
 
-    - PARAMS
+    - `PARAMS`
 
-        [ ]
+        `[ ]`
 
 - 方法
 
@@ -403,27 +446,27 @@ IP 地址字段，继承自 `BaseField`。
 
 - `__init__(self, version='both', **kwargs)`
 
-    - version
+    - `version`
 
         指定版本，支持的版本有：['ipv4', 'ipv6', 'both']
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-        IPy.IP
+       ` IPy.IP`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'ip_address'
+        `'ip_address'`
 
-    - PARAMS
+    - `PARAMS`
 
-        ['version']
+        `['version']`
 
 - 方法
 
@@ -431,6 +474,7 @@ IP 地址字段，继承自 `BaseField`。
 
         返回随机生成的一个 IP 地址。
 
+---
 
 ## URLField
 
@@ -445,19 +489,19 @@ IP 地址字段，继承自 `BaseField`。
 
     覆盖父类初始化方法，`strict` 强制设为 `True`。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'url'
+        `'url'`
 
-    - PARAMS
+    - `PARAMS`
 
-        [ ]
+        `[ ]`
 
 - 方法
 
@@ -465,6 +509,7 @@ IP 地址字段，继承自 `BaseField`。
 
         返回随机生成的 url。
 
+---
 
 ## EnumField
 
@@ -479,33 +524,35 @@ IP 地址字段，继承自 `BaseField`。
 
 - `__init__(self, choices=None, **kwargs)`
 
-    - choices
+    - `choices`
 
         可选值列表。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-       object
+       `object`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'enum'
+        `'enum'`
 
-    - PARAMS
+    - `PARAMS`
 
-        ['choices']
+        `['choices']`
 
 - 方法
 
     - `mock_data(self)`
 
         返回随机从 choices 中挑选的值。
+
+---
 
 ## DictField
 
@@ -517,29 +564,29 @@ IP 地址字段，继承自 `BaseField`。
 
 - `__init__(self, validator=None, **kwargs)`
 
-    - validator
+    - `validator`
 
         `Validator` 实例，用于验证字典内各个字段的数据。由于 `dict` 是一个 key-value 的复合数据结构，很难通过简单的规则去约束它，因此，最直接的方法就是定义一个 `Validator` 去校验 `dict`。
 
         如果 `validator` 等于 `None`，则任何 `dict` 都是合法的。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-        dict
+        `dict`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'dict'
+        `'dict'`
 
-    - PARAMS
+    - `PARAMS`
 
-        ['validator']
+        `['validator']`
 
 - 方法
 
@@ -547,6 +594,7 @@ IP 地址字段，继承自 `BaseField`。
 
          调用 `validator.mock_data()` 生成测试数据，如果 `validator` 等于 `None`，则返回空字典
 
+---
 
 ## ListField
 
@@ -558,35 +606,35 @@ IP 地址字段，继承自 `BaseField`。
 
 - `__init__(self, field=None, min_length=0, max_length=None, **kwargs)`
 
-    - field
+    - `field`
 
         列表元素的字段类型，必须是 BaseField 的实例。如果 field 等于 None，则不校验列表中的元素，意味着任何 list 都是合法的。
 
-    - min_length
+    - `min_length`
 
         最小长度。默认为 0，即允许空列表。
 
-    - max_length
+    - `max_length`
 
         最大长度。默认为 None，表示不限制最大长度。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
-        (list, tuple)
+        `(list, tuple)`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'list'
+        `'list'`
 
-    - PARAMS
+    - `PARAMS`
 
-        ['field', 'min_length', 'max_length']
+        `['field', 'min_length', 'max_length']`
 
 - 方法
 
@@ -594,6 +642,7 @@ IP 地址字段，继承自 `BaseField`。
 
         返回随机生成的一个列表，元素由 `field` 随机生成，长度在 `min_length` 和 `max_length` 之间。如果 `max_length` 等于 `None`，则假设等于 10。如果 `field` 等于 `None`，则列表元素都等于 `None`。
 
+---
 
 ## TimestampField
 
@@ -608,19 +657,19 @@ IP 地址字段，继承自 `BaseField`。
 
     覆盖父类初始化方法，将 `min_value` 设为 `0`，`max_value` 设为 `2 ** 32 - 1`。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `IntegerField` 和 `BaseField` 所需的参数。
 
 - 类属性
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'timestamp'
+        `'timestamp'`
 
-    - PARAMS
+    - `PARAMS`
 
-        [ ]
+        `[ ]`
 
 - 方法
 
@@ -628,6 +677,7 @@ IP 地址字段，继承自 `BaseField`。
 
         返回随机生成的时间戳。
 
+---
 
 ## DatetimeField
 
@@ -647,34 +697,34 @@ IP 地址字段，继承自 `BaseField`。
 
 - `__init__(self, dt_format=None, tzinfo=None, **kwargs)`
 
-    - dt_format
+    - `dt_format`
 
         日期时间格式化字符串。如果 `dt_format` 等于 `None`，则将其设为默认值 `'%Y/%m/%d %H:%M:%S'`。
 
-    - tzinfo
+    - `tzinfo`
 
-        时区信息，详情请参考[python datetime tzinfo](https://docs.python.org/3.7/library/datetime.html#datetime.tzinfo)。
-        当校验通过后，会将日期的时区设为`tzinfo`。
+        时区信息，详情请参考 [python datetime tzinfo](https://docs.python.org/3.7/library/datetime.html#datetime.tzinfo)。
+        当校验通过后，会将日期的时区设为 `tzinfo`。
         推荐使用 [pytz](https://github.com/newvem/pytz) 库获取各个国家地区的时区信息。
 
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
        `datetime.datetime`
 
-    - FIELD_TYPE_NAME
+    - `FIELD_TYPE_NAME`
 
-        'datetime'
+        `'datetime'`
 
     - PARAMS
 
-        ['dt_format', 'tzinfo']
+        `['dt_format', 'tzinfo']`
 
 - 方法
 
@@ -682,6 +732,7 @@ IP 地址字段，继承自 `BaseField`。
 
         返回随机生成的日期时间。
 
+---
 
 ## DateField
 
@@ -701,28 +752,28 @@ IP 地址字段，继承自 `BaseField`。
 
 
 - `__init__(self, dt_format=None, **kwargs)`
-   
-    - dt_format
+
+    - `dt_format`
 
         日期格式化字符串。如果 `dt_format` 等于 `None`，则将其设为默认值 `'%Y/%m/%d'`。
 
-    - kwargs
+    - `kwargs`
 
         其它参数，例如 `BaseField` 所需的参数。
 
 - 类属性
 
-    - INTERNAL_TYPE
+    - `INTERNAL_TYPE`
 
         `datetime.date`
 
     - FIELD_TYPE_NAME
 
-        'date'
+        `'date'`
 
-    - PARAMS
+    - `PARAMS`
 
-        ['dt_format']
+        `['dt_format']`
 
 - 方法
 

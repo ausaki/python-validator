@@ -1,4 +1,4 @@
-from validator import Validator, ListField, IntegerField
+from validator import Validator, ListField, IntegerField, create_validator
 
 
 class V(Validator):
@@ -56,10 +56,30 @@ def test_to_dict():
     for p in ListField.PARAMS:
         assert p in field_info
     assert field_info['type'] == ListField.FIELD_TYPE_NAME
-    assert isinstance(field_info['field'], IntegerField)
+    assert isinstance(field_info['field'], dict)
     assert field_info['min_length'] == 1
     assert field_info['max_length'] == 52
 
+
+def test_create_valiadtor():
+    data = {
+        'cards': {
+            'type': 'list',
+            'field': {
+                'type': 'integer',
+                'min_value': 1,
+                'max_value': 13
+            },
+            'min_length': 1,
+            'max_length': 52
+        }
+    }
+    V = create_validator(data)
+    assert issubclass(V, Validator)
+
+    data = {'cards': [1, 2, 3, 4]}
+    v = V(data)
+    assert v.is_valid()
 
 def test_no_field():
     class V(Validator):

@@ -1,4 +1,4 @@
-from validator import Validator, DatetimeField
+from validator import Validator, DatetimeField, create_validator
 
 
 class V(Validator):
@@ -38,3 +38,20 @@ def test_to_dict():
         assert p in field_info
     assert field_info['type'] == DatetimeField.FIELD_TYPE_NAME
     assert field_info['dt_format'] == DatetimeField.DEFAULT_FORMAT
+
+
+def test_create_valiadtor():
+    data = {
+        'create_at': {
+            'type': 'datetime',
+            'dt_format': '%Y/%m/%d %H:%M:%S',
+            'tzinfo': 'Asia/Shanghai'
+        }
+    }
+    V = create_validator(data)
+    assert issubclass(V, Validator)
+
+    data = {'create_at': '2018/07/01 17:01:20'}
+    v = V(data)
+    assert v.is_valid(), v.str_errors
+    

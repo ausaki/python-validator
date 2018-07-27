@@ -1,4 +1,4 @@
-from validator import Validator, DictField, IntegerField
+from validator import Validator, DictField, IntegerField, create_validator
 
 class BorderValidator(Validator):
     width = IntegerField()
@@ -35,3 +35,36 @@ def test_data():
 
     data['rectangle']['border']['width'] = 2
     assert validated_data['rectangle']['border']['width'] != 2
+
+
+def test_create_valiadtor():
+    data = {
+        'rectangle': {
+            'type': 'dict',
+            'validator': {
+                'width': {
+                    'type': 'integer',
+                },
+                'height': {
+                    'type': 'integer',
+                },
+                'border': {
+                    'type': 'dict',
+                    'validator': {
+                        'width': {
+                            'type': 'integer'
+                        },
+                        'color': {
+                            'type': 'integer'
+                        }
+                    }
+                }
+            },
+        }
+    }
+    V = create_validator(data)
+    assert issubclass(V, Validator)
+
+    data = {'rectangle': {'width': 10, 'height': 50, 'border': {'width': 1, 'color': 0xff0000}}}
+    v = V(data)
+    assert v.is_valid()

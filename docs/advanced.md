@@ -32,8 +32,9 @@ data = {
     'sex': 'f'
 }
 ```
+python-validator 还支持 [通过数据结构字典创建 Validator](#validator_1)。
 
-关于字段参数请参考 [字段 API](fields.md#dictfield)
+关于字段参数请参考 [字段 API](fields.md)。
 
 ## 校验数据
 
@@ -41,7 +42,7 @@ data = {
 
 ```python
 data = {
-    'name: 'Bob',
+    'name:'Bob',
     'age': 30,
     'sex': 'm'
 }
@@ -50,14 +51,14 @@ print(v.is_valid()) #  校验数据
 print(v.validated_data) # 获取校验过的数据
 ```
 
-如果数据不合法，那么`v.validated_data`是 None。
+如果数据不合法，那么 `v.validated_data` 是 None。
 
-`is_valid()`其实还接受一个可选的参数`raise_error`，该参数默认为 `False`，
-如果`raise_error`为 `True`，那么当数据非法时，`is_valid()`会触发异常`ValidationError`，而不是返回`False`。
+`is_valid()` 其实还接受一个可选的参数 `raise_error`，该参数默认为 `False`，
+如果 `raise_error` 为 `True`，那么当数据非法时，`is_valid()` 会触发异常 `ValidationError`，而不是返回 `False`。
 
 ## 错误信息
 
-错误信息保存在实例属性 `errors`中，`errors`是一个字典，包含了每个错误字段的错误信息，例如：
+错误信息保存在实例属性 `errors` 中，`errors` 是一个字典，包含了每个错误字段的错误信息，例如：
 
 ```python
 # data
@@ -72,7 +73,7 @@ print(v.validated_data) # 获取校验过的数据
 }
 ```
 
-`str_errors`属性是格式化之后的错误信息，例如：
+`str_errors` 属性是格式化之后的错误信息，例如：
 
 ```python
 {
@@ -83,8 +84,8 @@ print(v.validated_data) # 获取校验过的数据
 
 ## 自定义字段级的校验方法
 
-`Validator` 在校验数据时会自动调用形如`validate_xxx`的方法校验字段数据。
-`validate_xxx`方法接受一个参数`value`（已经校验过的值），无需返回任何值。如果数据非法，触发`FieldValidationError`异常即可。
+`Validator` 在校验数据时会自动调用形如 `validate_xxx` 的方法校验字段数据。
+`validate_xxx` 方法接受一个参数 `value`（已经校验过的值），无需返回任何值。如果数据非法，触发 `FieldValidationError` 异常即可。
 
 > 将 xxx 替换为字段名
 
@@ -104,11 +105,11 @@ class UserInfoValidator(Validator):
 
 ```
 
-**注意：不建议在`validate_xxx` 方法中修改 `value`**
+** 注意：不建议在 `validate_xxx` 方法中修改 `value`**
 
 ## 自定义全局的校验方法
 
-当校验完所有字段的数据后，`Validator`会调用`validate`方法校验全局数据，此时的全局数据是一个已经校验过的 dict。默认的`validate`方法直接返回数据，你可以覆盖它以实现自己的校验逻辑。
+当校验完所有字段的数据后，`Validator` 会调用 `validate` 方法校验全局数据，此时的全局数据是一个已经校验过的 dict。默认的 `validate` 方法直接返回数据，你可以覆盖它以实现自己的校验逻辑。
 
 代码示例：
 
@@ -130,7 +131,7 @@ class UserInfoValidator(Validator):
 
 ## 生成测试数据
 
-类方法 `mock_data()`方法可以生成测试数据，该数据不保证完全通过校验，特别是通过“自定义字段级的校验方法”和“自定义全局的校验方法”的校验。
+类方法 `mock_data()` 方法可以生成测试数据，该数据不保证完全通过校验，特别是通过 “自定义字段级的校验方法” 和 “自定义全局的校验方法” 的校验。
 
 代码示例：
 
@@ -141,30 +142,78 @@ print(data) # {'age': 74, 'name': u'R7fuZaWOCPUVeYSQqaUvI', 'sex': 'f'}
 
 ## to_dict
 
-类方法 `to_dict()` 返回一个描述数据结构的 dict，例如：
+类方法 `to_dict(cls)` 返回一个描述数据结构的 dict，例如：
 
 ```python
 {
-    'age': {
-        'default': 20,
-        'required': False,
-        'strict': True,
-        'type': 'integer',
-        'validators': []
+    "age": {
+        "required": false,
+        "default": 20,
+        "max_value": 120,
+        "min_value": 1,
+        "strict": true,
+        "validators": [],
+        "type": "integer"
     },
-    'name': {
-        'default': <EmptyValue>,
-        'required': True,
-        'strict': True,
-        'type': 'string',
-        'validators': []
+    "name": {
+        "regex": null,
+        "min_length": 0,
+        "max_length": 50,
+        "strict": true,
+        "default": "__empty__",
+        "validators": [],
+        "required": true,
+        "type": "string"
     },
-    'sex': {
-        'default': <EmptyValue>,
-        'required': False,
-        'strict': True,
-        'type': 'enum',
-        'validators': []
+    "sex": {
+        "default": "__empty__",
+        "required": false,
+        "choices": [
+            "f",
+            "m"
+        ],
+        "strict": true,
+        "validators": [],
+        "type": "enum"
     }
 }
+```
+
+## 数据结构字典
+
+数据结构字典的 key 是字段名称，value 是描述字段的类型和初始化参数的字典。
+
+以上面 `to_dict` 返回的字典为例，`age`， `name`，和 `sex` 都是字段名称，其对应的值包含了字段类型和初始化参数。
+
+`type` 表示字符串形式的字段类型，每个字段的字符串形式的字段类型保存在 `FIELD_TYPE_NAME` 属性中。剩余的都是字段的初始化参数。
+
+假如 `default`等于 `EMPTY_VALUE`，为了方便则使用'__empty__'表示。
+
+### 特殊字段
+
+- ListField
+
+    
+
+- DictField
+
+- DatetimeField
+
+## 通过数据结构字典创建 Validator
+
+`create_validator(data_struct_dict, name=None)`
+
+根据 `data_struct_dict` 创建一个 Validator 实例。`data_struct_dict` 是一个描述数据结构的字典，类似于 `to_dict` 返回的字典。
+
+示例：
+
+```python
+data = {
+    'name': {
+        'type': 'string',
+        'min_length': 10,
+        'max_length': 20,
+    }
+}
+V = create_validator(data)
 ```

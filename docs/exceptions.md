@@ -14,6 +14,12 @@
 
         错误代码，目前未使用到。
 
+- 实例方法
+
+    - `get_detail(self)`
+
+        返回错误详情。
+
 - 类属性
 
     - default_detail
@@ -24,27 +30,33 @@
 
         默认的错误代码。如果 `__init__` 的 `code` 参数为 `None`，则将其设为 `default_code`。
 
+---
+
 ## FieldRequiredError
 
-继承自BaseValidationError，当字段缺失时触发该异常。
+继承自 BaseValidationError，当字段缺失时触发该异常。
 
 ```
 default_detail = 'Field is required'
 default_code = 'error'
 ```
 
+---
+
 ## ValidationError
 
-继承自BaseValidationError，当 `Validator.validate()` 或者 `Validator.is_valid(raise_error=True)` 校验数据失败时触发该异常。
+继承自 BaseValidationError，当 `Validator.validate()` 或者 `Validator.is_valid(raise_error=True)` 校验数据失败时触发该异常。
 
 ```
 default_detail = 'Validation error'
 default_code = 'error'
 ```
 
+---
+
 ## FieldValidationError
 
-继承自BaseValidationError，当校验字段数据失败时触发该异常。
+继承自 BaseValidationError，当校验字段数据失败时触发该异常。
 
 ```
 default_detail = 'field Validation error'
