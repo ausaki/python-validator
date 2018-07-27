@@ -1,0 +1,779 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.5, mkdocs-material-2.9.2">
+    
+    
+      
+        <title>进阶用法 - python-validator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.ba0fd1a6.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="python-validator" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                python-validator
+              </span>
+              <span class="md-header-nav__topic">
+                进阶用法
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    python-validator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="首页" class="md-nav__link">
+      首页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        进阶用法
+      </label>
+    
+    <a href="./" title="进阶用法" class="md-nav__link md-nav__link--active">
+      进阶用法
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#validator" title="定义 Validator" class="md-nav__link">
+    定义 Validator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="校验数据" class="md-nav__link">
+    校验数据
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="错误信息" class="md-nav__link">
+    错误信息
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="自定义字段级的校验方法" class="md-nav__link">
+    自定义字段级的校验方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="自定义全局的校验方法" class="md-nav__link">
+    自定义全局的校验方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" title="生成测试数据" class="md-nav__link">
+    生成测试数据
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#to_dict" title="to_dict" class="md-nav__link">
+    to_dict
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" title="数据结构字典" class="md-nav__link">
+    数据结构字典
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" title="特殊字段" class="md-nav__link">
+    特殊字段
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validator_1" title="通过数据结构字典创建 Validator" class="md-nav__link">
+    通过数据结构字典创建 Validator
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      字段
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        字段
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/" title="字段 API" class="md-nav__link">
+      字段 API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../custom_field/" title="自定义字段" class="md-nav__link">
+      自定义字段
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../exceptions/" title="异常" class="md-nav__link">
+      异常
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      关于
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        关于
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../history/" title="历史版本" class="md-nav__link">
+      历史版本
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../license/" title="LICENSE" class="md-nav__link">
+      LICENSE
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#validator" title="定义 Validator" class="md-nav__link">
+    定义 Validator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="校验数据" class="md-nav__link">
+    校验数据
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="错误信息" class="md-nav__link">
+    错误信息
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="自定义字段级的校验方法" class="md-nav__link">
+    自定义字段级的校验方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="自定义全局的校验方法" class="md-nav__link">
+    自定义全局的校验方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" title="生成测试数据" class="md-nav__link">
+    生成测试数据
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#to_dict" title="to_dict" class="md-nav__link">
+    to_dict
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" title="数据结构字典" class="md-nav__link">
+    数据结构字典
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" title="特殊字段" class="md-nav__link">
+    特殊字段
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validator_1" title="通过数据结构字典创建 Validator" class="md-nav__link">
+    通过数据结构字典创建 Validator
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="_1">进阶</h1>
+<p>python-validator 主要包含 <code>Validator</code> 和 <code>XXXField</code> 两部分，<code>Validator</code> 类似于 Django 中的 Model，用于描述数据结构，其中的 <code>XXXField</code> 描述了字段的类型和约束，<code>XXXField</code> 负责校验对应的数据。</p>
+<h2 id="validator">定义 Validator</h2>
+<p>直接继承 <code>Validator</code> 类并列出包含的字段</p>
+<pre><code class="python">from validator import Validator, StringField, IntegerField, EnumField
+
+class UserInfoValidator(Validator):
+    name = StringField(max_length=50, required=True)
+    age = IntegerField(min_value=1, max_value=120, default=20)
+    sex = EnumField(choices=['f', 'm'])
+</code></pre>
+
+<p>上面的代码定义了一个校验用户信息的 <code>Validator</code>:</p>
+<ul>
+<li>
+<p>name 是一个字符串，最大长度为 50 个字节，并且必须提供不能缺失。注意这里的长度指的是字节，而不是字符。</p>
+</li>
+<li>
+<p>age 是一个整形，最小值 1，最大值 120，非必须，默认值 20</p>
+</li>
+<li>
+<p>sex 是一个枚举类型，可选值：['f', 'm']，非必须。</p>
+</li>
+</ul>
+<p>当 <code>required</code> 为 <code>True</code> 时，该字段必须提供，除非显式指定 <code>default</code> 值。如果 <code>required</code> 为 <code>True</code> 且没有指定 <code>default</code> 值，当字段不存在时将会发生异常 <code>FieldValidationError</code>。以上面的 <code>UserInfoValidator</code> 为例，下面的数据将会发生异常：</p>
+<pre><code class="python">data = {
+    # 缺少 name 字段
+    'age': 20,
+    'sex': 'f'
+}
+</code></pre>
+
+<p>python-validator 还支持 <a href="#validator_1">通过数据结构字典创建 Validator</a>。</p>
+<p>关于字段参数请参考 <a href="../fields/">字段 API</a>。</p>
+<h2 id="_2">校验数据</h2>
+<p>使用 <code>is_valid()</code> 校验数据，数据合法该方法返回 <code>True</code>，否则返回 <code>False</code>。</p>
+<pre><code class="python">data = {
+    'name:'Bob',
+    'age': 30,
+    'sex': 'm'
+}
+v = UserInfoValidator(data)
+print(v.is_valid()) #  校验数据
+print(v.validated_data) # 获取校验过的数据
+</code></pre>
+
+<p>如果数据不合法，那么 <code>v.validated_data</code> 是 None。</p>
+<p><code>is_valid()</code> 其实还接受一个可选的参数 <code>raise_error</code>，该参数默认为 <code>False</code>，
+如果 <code>raise_error</code> 为 <code>True</code>，那么当数据非法时，<code>is_valid()</code> 会触发异常 <code>ValidationError</code>，而不是返回 <code>False</code>。</p>
+<h2 id="_3">错误信息</h2>
+<p>错误信息保存在实例属性 <code>errors</code> 中，<code>errors</code> 是一个字典，包含了每个错误字段的错误信息，例如：</p>
+<pre><code class="python"># data
+{
+    'age': '24',
+    'sex': 'f'
+}
+# v.errors
+{
+    'age': &lt;FieldValidationError: got a wrong type: str, expect integer&gt;,
+    'name': &lt;FieldRequiredError: Field is required&gt;
+}
+</code></pre>
+
+<p><code>str_errors</code> 属性是格式化之后的错误信息，例如：</p>
+<pre><code class="python">{
+    'age': 'got a wrong type: str, expect integer',
+    'name': 'Field is required'
+}
+</code></pre>
+
+<h2 id="_4">自定义字段级的校验方法</h2>
+<p><code>Validator</code> 在校验数据时会自动调用形如 <code>validate_xxx</code> 的方法校验字段数据。
+<code>validate_xxx</code> 方法接受一个参数 <code>value</code>（已经校验过的值），无需返回任何值。如果数据非法，触发 <code>FieldValidationError</code> 异常即可。</p>
+<blockquote>
+<p>将 xxx 替换为字段名</p>
+</blockquote>
+<p>代码示例：</p>
+<pre><code class="python">from validator import Validator, StringField, IntegerField, EnumField, FieldValidationError
+
+class UserInfoValidator(Validator):
+    name = StringField(max_length=50, required=True)
+    age = IntegerField(min_value=1, max_value=120, default=20)
+    sex = EnumField(choices=['f', 'm'])
+
+    def validate_name(self, value):
+        if value == 'foo':
+            raise FieldValidationError('&quot;foo&quot; is invalid')
+
+</code></pre>
+
+<p><strong> 注意：不建议在 <code>validate_xxx</code> 方法中修改 <code>value</code></strong></p>
+<h2 id="_5">自定义全局的校验方法</h2>
+<p>当校验完所有字段的数据后，<code>Validator</code> 会调用 <code>validate</code> 方法校验全局数据，此时的全局数据是一个已经校验过的 dict。默认的 <code>validate</code> 方法直接返回数据，你可以覆盖它以实现自己的校验逻辑。</p>
+<p>代码示例：</p>
+<pre><code class="python">from validator import Validator, StringField, IntegerField, EnumField, ValidationError
+
+class UserInfoValidator(Validator):
+    name = StringField(max_length=50, required=True)
+    age = IntegerField(min_value=1, max_value=120, default=20)
+    sex = EnumField(choices=['f', 'm'])
+
+    def validate(self, data):
+        if data['name'] == 'Bob' and data['age'] &gt; 60:
+            raise ValidationError('Bob is too old, he is younger than 60 age')
+        # 你也可以在这里修改 data 的数据
+        # data['foo'] = 'bar'
+        return data
+</code></pre>
+
+<h2 id="_6">生成测试数据</h2>
+<p>类方法 <code>mock_data()</code> 方法可以生成测试数据，该数据不保证完全通过校验，特别是通过 “自定义字段级的校验方法” 和 “自定义全局的校验方法” 的校验。</p>
+<p>代码示例：</p>
+<pre><code class="python">data = UserInfoValidator.mock_data()
+print(data) # {'age': 74, 'name': u'R7fuZaWOCPUVeYSQqaUvI', 'sex': 'f'}
+</code></pre>
+
+<h2 id="to_dict">to_dict</h2>
+<p>类方法 <code>to_dict(cls)</code> 返回一个描述数据结构的 dict，例如：</p>
+<pre><code class="python">{
+    &quot;age&quot;: {
+        &quot;required&quot;: false,
+        &quot;default&quot;: 20,
+        &quot;max_value&quot;: 120,
+        &quot;min_value&quot;: 1,
+        &quot;strict&quot;: true,
+        &quot;validators&quot;: [],
+        &quot;type&quot;: &quot;integer&quot;
+    },
+    &quot;name&quot;: {
+        &quot;regex&quot;: null,
+        &quot;min_length&quot;: 0,
+        &quot;max_length&quot;: 50,
+        &quot;strict&quot;: true,
+        &quot;default&quot;: &quot;__empty__&quot;,
+        &quot;validators&quot;: [],
+        &quot;required&quot;: true,
+        &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;sex&quot;: {
+        &quot;default&quot;: &quot;__empty__&quot;,
+        &quot;required&quot;: false,
+        &quot;choices&quot;: [
+            &quot;f&quot;,
+            &quot;m&quot;
+        ],
+        &quot;strict&quot;: true,
+        &quot;validators&quot;: [],
+        &quot;type&quot;: &quot;enum&quot;
+    }
+}
+</code></pre>
+
+<h2 id="_7">数据结构字典</h2>
+<p>数据结构字典的 key 是字段名称，value 是描述字段的类型和初始化参数的字典。</p>
+<p>以上面 <code>to_dict</code> 返回的字典为例，<code>age</code>， <code>name</code>，和 <code>sex</code> 都是字段名称，其对应的值包含了字段类型和初始化参数。</p>
+<p><code>type</code> 表示字符串形式的字段类型，每个字段的字符串形式的字段类型保存在 <code>FIELD_TYPE_NAME</code> 属性中。剩余的都是字段的初始化参数。</p>
+<p>假如 <code>default</code>等于 <code>EMPTY_VALUE</code>，为了方便则使用'<strong>empty</strong>'表示。</p>
+<h3 id="_8">特殊字段</h3>
+<ul>
+<li>
+<p>ListField</p>
+</li>
+<li>
+<p>DictField</p>
+</li>
+<li>
+<p>DatetimeField</p>
+</li>
+</ul>
+<h2 id="validator_1">通过数据结构字典创建 Validator</h2>
+<p><code>create_validator(data_struct_dict, name=None)</code></p>
+<p>根据 <code>data_struct_dict</code> 创建一个 Validator 实例。<code>data_struct_dict</code> 是一个描述数据结构的字典，类似于 <code>to_dict</code> 返回的字典。</p>
+<p>示例：</p>
+<pre><code class="python">data = {
+    'name': {
+        'type': 'string',
+        'min_length': 10,
+        'max_length': 20,
+    }
+}
+V = create_validator(data)
+</code></pre>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href=".." title="首页" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                首页
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../fields/" title="字段 API" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                字段 API
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.a59e2a89.js"></script>
+      
+      <script>app.initialize({version:"0.17.5",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

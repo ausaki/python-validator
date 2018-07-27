@@ -1,0 +1,1607 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.5, mkdocs-material-2.9.2">
+    
+    
+      
+        <title>字段 API - python-validator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.ba0fd1a6.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#api" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="python-validator" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                python-validator
+              </span>
+              <span class="md-header-nav__topic">
+                字段 API
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    python-validator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="首页" class="md-nav__link">
+      首页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../advanced/" title="进阶用法" class="md-nav__link">
+      进阶用法
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      字段
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        字段
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        字段 API
+      </label>
+    
+    <a href="./" title="字段 API" class="md-nav__link md-nav__link--active">
+      字段 API
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="模块属性" class="md-nav__link">
+    模块属性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="模块方法" class="md-nav__link">
+    模块方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basefield" title="BaseField" class="md-nav__link">
+    BaseField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stringfield" title="StringField" class="md-nav__link">
+    StringField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numberfield" title="NumberField" class="md-nav__link">
+    NumberField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integerfield" title="IntegerField" class="md-nav__link">
+    IntegerField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#floatfield" title="FloatField" class="md-nav__link">
+    FloatField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boolfield" title="BoolField" class="md-nav__link">
+    BoolField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uuidfield" title="UUIDField" class="md-nav__link">
+    UUIDField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#md5field" title="MD5Field" class="md-nav__link">
+    MD5Field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shafield" title="SHAField" class="md-nav__link">
+    SHAField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emailfield" title="EmailField" class="md-nav__link">
+    EmailField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipaddressfield" title="IPAddressField" class="md-nav__link">
+    IPAddressField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#urlfield" title="URLField" class="md-nav__link">
+    URLField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enumfield" title="EnumField" class="md-nav__link">
+    EnumField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dictfield" title="DictField" class="md-nav__link">
+    DictField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#listfield" title="ListField" class="md-nav__link">
+    ListField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timestampfield" title="TimestampField" class="md-nav__link">
+    TimestampField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datetimefield" title="DatetimeField" class="md-nav__link">
+    DatetimeField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datefield" title="DateField" class="md-nav__link">
+    DateField
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../custom_field/" title="自定义字段" class="md-nav__link">
+      自定义字段
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../exceptions/" title="异常" class="md-nav__link">
+      异常
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      关于
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        关于
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../history/" title="历史版本" class="md-nav__link">
+      历史版本
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../license/" title="LICENSE" class="md-nav__link">
+      LICENSE
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="模块属性" class="md-nav__link">
+    模块属性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="模块方法" class="md-nav__link">
+    模块方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basefield" title="BaseField" class="md-nav__link">
+    BaseField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stringfield" title="StringField" class="md-nav__link">
+    StringField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numberfield" title="NumberField" class="md-nav__link">
+    NumberField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integerfield" title="IntegerField" class="md-nav__link">
+    IntegerField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#floatfield" title="FloatField" class="md-nav__link">
+    FloatField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boolfield" title="BoolField" class="md-nav__link">
+    BoolField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uuidfield" title="UUIDField" class="md-nav__link">
+    UUIDField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#md5field" title="MD5Field" class="md-nav__link">
+    MD5Field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shafield" title="SHAField" class="md-nav__link">
+    SHAField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emailfield" title="EmailField" class="md-nav__link">
+    EmailField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipaddressfield" title="IPAddressField" class="md-nav__link">
+    IPAddressField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#urlfield" title="URLField" class="md-nav__link">
+    URLField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enumfield" title="EnumField" class="md-nav__link">
+    EnumField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dictfield" title="DictField" class="md-nav__link">
+    DictField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#listfield" title="ListField" class="md-nav__link">
+    ListField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timestampfield" title="TimestampField" class="md-nav__link">
+    TimestampField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datetimefield" title="DatetimeField" class="md-nav__link">
+    DatetimeField
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datefield" title="DateField" class="md-nav__link">
+    DateField
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="api">字段 API</h1>
+<p>下面将要介绍 python-validator 中所有的字段。</p>
+<hr />
+<h2 id="_1">模块属性</h2>
+<ul>
+<li>
+<p><code>FIELDS_NAME_MAP</code></p>
+<p>所有字段名称和字段类的映射关系，例如:</p>
+</li>
+</ul>
+<pre><code class="python">{
+    'string': StringField,
+    'integer': IntegerField,
+    ...
+}
+</code></pre>
+
+<hr />
+<h2 id="_2">模块方法</h2>
+<ul>
+<li>
+<p><code>create_field(field_info)</code></p>
+<p>根据 <code>field_info</code> 创建一个字段实例，<code>field_info</code> 是一个字典，例如 <code>string_field.to_dict()</code> 的返回值。</p>
+<p>一般不会直接使用到该方法，如果想要通过数据结构字典创建 <code>Validator</code>，请查看<a href="../advanced/#validator_1">通过数据结构字典创建 Validator</a>。</p>
+</li>
+</ul>
+<h2 id="basefield">BaseField</h2>
+<p>所有字段的父类。</p>
+<ul>
+<li>
+<p><code>__init__(self, strict=True, default=EMPTY_VALUE, validators=None, required=False, **kwargs)</code></p>
+<ul>
+<li>
+<p><code>strict</code></p>
+<p>bool 类型，是否采用严格类型校验。当 <code>strict = True</code> 时，值必须是该字段类型的实例，即 <code>isinstance(value, INTERNAL_TYPE)</code>，否则发生异常 <code>FieldValidationError('got a wrong type: {0}, expect {1}')</code>。 当 <code>strict = False</code> 时，如果值不是字段类型的实例，会尝试进行类型转换，假如转换失败发生异常 <code>FieldValidationError('type convertion is failed: {0} -&gt; {1}')</code></p>
+</li>
+<li>
+<p><code>default</code></p>
+<p>字段的默认值。<code>default</code> 默认为 <code>EMPTY_VALUE</code>， <code>EMPTY_VALUE</code> 是 python-validator 内部使用的一个空值，以区别 None。当待校验数据中缺失该字段时，使用 <code>default</code> 。 python-validator 会对 <code>default</code> 进行校验（除非 <code>default</code> 等于 <code>EMPTY_VALUE</code> 或者 <code>None</code>），所以请提供合法的 <code>default</code>。</p>
+</li>
+<li>
+<p><code>required</code></p>
+<p>bool 类型，字段是否是必须的。如果该字段是必须的且没有指定默认值，会导致异常 <code>FieldRequiredError</code>。</p>
+</li>
+<li>
+<p><code>validators</code></p>
+<p>列表类型，提供一组额外的校验器。validator 可以是函数或者其它可调用的对象，validator 接受一个参数，即字段值。函数的返回值无效，因此无法实现级联校验的效果（<code>value | validate(value) | validate(value)</code>）。不要在函数中修改字段值。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>目前未使用。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p>字段内部类型。可以是单个类型或者类型列表，例如 <code>StringField</code> 的 <code>INTERNAL_TYPE</code> 等于 <code>str</code>（in Python2）或者 <code>(str, unicode)</code>（in python3）</p>
+</li>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p>字段类型名字。字符串形式的类型名字，主要是为了可读性和方便显示。</p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p>参数名称列表。<code>PARAMS</code> 包含所有初始化方法所需的参数名称。例如 <code>BaseField</code> 的 <code>PARAMS</code> 等于 <code>['strict', 'default', 'validators', 'required']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>validate(self, value)</code></p>
+<p>暴露给外部调用的校验数据方法，该方法首先调用 <code>_validate()</code> 校验数据，接着遍历 <code>validators</code> 校验数据，最后返回校验后的值。</p>
+</li>
+<li>
+<p><code>_validate(self, value)</code></p>
+<p>私有校验数据方法，校验成功应该返回合法值，失败则触发异常 <code>FieldValidationError</code>。子类应该覆盖该方法实现自己的校验逻辑。如果 <code>value</code> 是可变类型的数据，建议拷贝一份 <code>value</code>，防止修改数据影响到原始数据。</p>
+</li>
+<li>
+<p><code>_validate_type(self, value)</code></p>
+<p>校验数据类型。<code>_validate</code> 可以调用该方法校验数据类型。校验类型的逻辑如下：</p>
+<ul>
+<li>
+<p>如果 <code>value</code> 不是 <code>INTERNAL_TYPE</code> 的实例，</p>
+<ul>
+<li>
+<p>如果 <code>strict</code> 为 <code>True</code>，则触发异常 <code>FieldValidationError</code>。</p>
+</li>
+<li>
+<p>如果 <code>strict</code> 为 <code>False</code>，则尝试进行类型转换。转换成功返回转换后的值，转换失败触发 <code>FieldValidationError</code>。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>如果 <code>value</code> 是 <code>INTERNAL_TYPE</code> 的实例，则直接返回 <code>value</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>_convert_type(self, value)</code></p>
+<p>转换数据类型，返回转换后的值。</p>
+</li>
+<li>
+<p><code>is_required(self)</code></p>
+<p>该字段是否必须。</p>
+</li>
+<li>
+<p><code>get_default(self)</code></p>
+<p>返回默认值。</p>
+</li>
+<li>
+<p><code>to_presentation(self, value)</code></p>
+<p>将 <code>value</code> 转换为字符串形式，<code>value</code> 必须是经过校验合法的值。</p>
+</li>
+<li>
+<p><code>to_internal(self, value)</code></p>
+<p>将 <code>value</code> 转换为内部形式，<code>value</code> 必须是经过校验合法的值。一般直接返回 <code>value</code>。</p>
+</li>
+<li>
+<p><code>to_dict(self)</code></p>
+<p>将字段转换为字典形式，字典描述了该字段的类型和初始化参数。</p>
+</li>
+<li>
+<p><code>from_dict(cls, params)</code></p>
+<p>从 <code>params</code> 创建一个字段实例。创建字段实例的代码就一句 <code>return cls(**params)</code>，如果想要实现更多自定义的创建过程，可以覆盖该方法。</p>
+</li>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回可用于测试的随机值。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="stringfield">StringField</h2>
+<p>字符串字段，继承自 <code>BaseField</code>。</p>
+<ul>
+<li>
+<p><code>__init__(self, min_length=0, max_length=None, regex=None, **kwargs)</code></p>
+<ul>
+<li>
+<p><code>min_length</code></p>
+<p>最小长度，以字节为单位。默认为 0，即允许空字符串。</p>
+</li>
+<li>
+<p><code>max_length</code></p>
+<p>最大长度，以字节为单位。默认为 None，表示不限制最大长度。</p>
+</li>
+<li>
+<p><code>regex</code></p>
+<p>正则表达式，测试字符串是否匹配。使用 <code>re.match</code> 进行匹配。<code>regex</code> 可以是字符串或者经过 <code>re.compile</code> 的 <code>_sre.SRE_Pattern</code> 对象。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p>in Python2: <code>(str, unicode)</code></p>
+<p>in Python3: <code>str</code></p>
+</li>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'string'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>['min_length', 'max_length', 'regex']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的一段字符串。字符串长度是一个随机值，介于 <code>min_length</code> 和 <code>max_length</code> 之间，如果 <code>max_length</code> 等于 <code>None</code>，则 <code>max_length = min_length + 100</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="numberfield">NumberField</h2>
+<p>普通数字字段，继承自 <code>BaseField</code>。</p>
+<ul>
+<li>
+<p><code>__init__(self, min_value=None, max_value=None, **kwargs)</code></p>
+<ul>
+<li>
+<p><code>min_value</code></p>
+<p>最小值。默认为 None，即不限制最小值。</p>
+</li>
+<li>
+<p><code>max_value</code></p>
+<p>最大值。默认为 None，即不限制最大值。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p>in Python2: <code>(int, long, float)</code></p>
+<p>in Python3: <code>(int, float)</code></p>
+</li>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'number'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>['min_value', 'max_value']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的一个数字。数字介于 <code>min_value</code> 和 <code>max_value</code> 之间，如果 <code>min_value</code> 等于 <code>None</code>，则 <code>min_value = 0</code>，如果 <code>max_value</code> 等于 <code>None</code>，则 <code>max_value = min_value + 1000</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="integerfield">IntegerField</h2>
+<p>整数字段，继承自 <code>NumberField</code>。</p>
+<ul>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p>in Python2: <code>(int, long)</code></p>
+<p>in Python3: <code>int</code></p>
+</li>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'int'</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="floatfield">FloatField</h2>
+<p>浮点数字段，继承自 <code>NumberField</code>。</p>
+<ul>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p><code>float</code></p>
+</li>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'float'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>[ ]</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="boolfield">BoolField</h2>
+<p>BoolField，继承自 <code>BaseField</code>。</p>
+<ul>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p><code>bool</code></p>
+</li>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'bool'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>[ ]</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回 <code>True</code> 或 <code>False</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="uuidfield">UUIDField</h2>
+<p>UUID 字段，继承自 <code>BaseField</code>。</p>
+<p>当 <code>strict</code> 为 <code>True</code> 时，值必须是 <code>uuid.UUID</code> 类型的。<code>strict</code> 为 <code>False</code> 时，值可以是 <code>uuid.UUID</code> 类型，也可以是形如'41e40df1-ef12-46d2-9290-4d3d9dbfe24f'，'41e40df1ef1246d292904d3d9dbfe24f'的字符串形式的值。</p>
+<p>校验通过后返回一个 <code>uuid.UUID</code> 实例。</p>
+<ul>
+<li>
+<p><code>__init__(self, format='hex', **kwargs)</code></p>
+<ul>
+<li>
+<p><code>format</code></p>
+<p>格式化类型，<code>to_presentation</code> 会用到。支持的 format 有：hex，str，int，bytes，bytes_le。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li><code>INTERNAL_TYPE</code></li>
+</ul>
+<p><code>uuid.UUID</code></p>
+<ul>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'UUID'</code></p>
+</li>
+<li>
+<p>PARAMS</p>
+</li>
+</ul>
+<p><code>['format']</code></p>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回由 <code>uuid.uuid4()</code> 随机生成的 <code>uuid.UUID</code> 实例。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="md5field">MD5Field</h2>
+<p>MD5 字段，继承自 <code>StringField</code>。</p>
+<p>合法值为 32 字节的十六进制形式的字符串。</p>
+<p>校验通过后返回一个原始字符串。</p>
+<ul>
+<li>
+<p><code>__init__(self, **kwargs)</code>
+    覆盖父类初始化方法，<code>strict</code> 为 <code>True</code>，<code>min_length</code> 和 <code>max_length</code> 都等于 32。</p>
+<ul>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>StringField</code>  或 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'md5'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>[ ]</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的一段 md5 字符串。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="shafield">SHAField</h2>
+<p>SHA 字段，继承自 <code>StringField</code>。</p>
+<p>合法值为 N 字节的十六进制形式的字符串。</p>
+<p>校验通过后返回一个原始字符串。</p>
+<ul>
+<li>
+<p><code>__init__(self, version=256, **kwargs)</code></p>
+<p>覆盖父类初始化方法，<code>strict</code> 为 <code>True</code>，<code>min_length</code> 和 <code>max_length</code> 都等于对应 SHA 版本的长度，例如 SHA1 的 <code>min_length</code> 和 <code>max_length</code> 都等于 40。</p>
+<ul>
+<li>
+<p><code>version</code></p>
+<p>SHA 版本，支持的版本有：[1, 224, 256, 384, 512]</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>StringField</code>  或 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li><code>FIELD_TYPE_NAME</code></li>
+</ul>
+<p><code>'sha'</code></p>
+<ul>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>[ ]</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的一段 sha 字符串。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="emailfield">EmailField</h2>
+<p>Email 字段，继承自 <code>StringField</code>。</p>
+<p>合法值为符合 email 格式的字符串。</p>
+<p>校验通过后返回原始字符串。</p>
+<ul>
+<li>
+<p><code>__init__(self, **kwargs)</code></p>
+<p>覆盖父类初始化方法，<code>strict</code> 强制设为 <code>True</code>。</p>
+<p>用于验证的正则表达式为:</p>
+<p><code>r'^[a-zA-Z0-9.!#$%&amp;\'*+/=?^_</code>{|}~-]+@<a href="?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9]">a-zA-Z0-9</a>?(?:.<a href="?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9]">a-zA-Z0-9</a>?)*$'`</p>
+<ul>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>StringField</code> 或 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'email'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>[ ]</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的 email 字符串。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="ipaddressfield">IPAddressField</h2>
+<p>IP 地址字段，继承自 <code>BaseField</code>。</p>
+<p>支持 <code>IPV4 和</code> <code>IPV6</code>，数据的校验依赖于 <code>IPy</code> 库。</p>
+<p>如果 <code>strict</code> 为 True，值必须是 <code>IPy.IP</code> 的实例。如果 <code>strict</code> 为 <code>False</code>，值 既可以是 <code>IPy.IP</code> 的实例，
+也可以是任何 <code>IPy.IP</code> 支持的格式，例如：'127.0.0.1', '::1234:1234', '7f000001'，具体请参考 <a href="https://github.com/autocracy/python-ipy">IPy</a>。</p>
+<p>校验通过后返回 <code>IPy.IP</code> 实例。</p>
+<ul>
+<li>
+<p><code>__init__(self, version='both', **kwargs)</code></p>
+<ul>
+<li>
+<p><code>version</code></p>
+<p>指定版本，支持的版本有：['ipv4', 'ipv6', 'both']</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li><code>INTERNAL_TYPE</code></li>
+</ul>
+<p><code>IPy.IP</code></p>
+<ul>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'ip_address'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>['version']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的一个 IP 地址。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="urlfield">URLField</h2>
+<p>字符串字段，继承自 <code>StringField</code>。</p>
+<p>合法值为 <code>urlparse.urlparse</code> 能够正确解析且包含 <code>scheme</code> 和 <code>hostname</code> 的字符串，<code>scheme</code> 必须是'http'，'https'其中之一。</p>
+<p>校验通过后返回原始字符串。</p>
+<ul>
+<li>
+<p><code>__init__(self, **kwargs)</code></p>
+<p>覆盖父类初始化方法，<code>strict</code> 强制设为 <code>True</code>。</p>
+<ul>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'url'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>[ ]</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的 url。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="enumfield">EnumField</h2>
+<p>枚举字段，继承自 <code>BaseField</code>。</p>
+<p>合法值必须是 <code>choices</code> 其中一员。</p>
+<p>校验通过后返回原始值。</p>
+<p><code>EnumField</code> 不验证数据类型，所以 <code>INTERNAL_TYPE</code> 等于 <code>object</code>。只要值在 <code>choices</code> 中就行了。</p>
+<ul>
+<li>
+<p><code>__init__(self, choices=None, **kwargs)</code></p>
+<ul>
+<li>
+<p><code>choices</code></p>
+<p>可选值列表。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li><code>INTERNAL_TYPE</code></li>
+</ul>
+<p><code>object</code></p>
+<ul>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'enum'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>['choices']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机从 choices 中挑选的值。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="dictfield">DictField</h2>
+<p>字典字段，继承自 <code>BaseField</code>。</p>
+<p>合法值必须是通过 <code>validator</code> 校验的 <code>dict</code>。</p>
+<p>校验通过后返回原始值的拷贝。</p>
+<ul>
+<li>
+<p><code>__init__(self, validator=None, **kwargs)</code></p>
+<ul>
+<li>
+<p><code>validator</code></p>
+<p><code>Validator</code> 实例，用于验证字典内各个字段的数据。由于 <code>dict</code> 是一个 key-value 的复合数据结构，很难通过简单的规则去约束它，因此，最直接的方法就是定义一个 <code>Validator</code> 去校验 <code>dict</code>。</p>
+<p>如果 <code>validator</code> 等于 <code>None</code>，则任何 <code>dict</code> 都是合法的。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p><code>dict</code></p>
+</li>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'dict'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>['validator']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>调用 <code>validator.mock_data()</code> 生成测试数据，如果 <code>validator</code> 等于 <code>None</code>，则返回空字典</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="listfield">ListField</h2>
+<p>列表字段，继承自 <code>BaseField</code>。</p>
+<p>合法值是一个通过 field 校验的列表（元组）。</p>
+<p>校验通过后返回原始值的拷贝。</p>
+<ul>
+<li>
+<p><code>__init__(self, field=None, min_length=0, max_length=None, **kwargs)</code></p>
+<ul>
+<li>
+<p><code>field</code></p>
+<p>列表元素的字段类型，必须是 BaseField 的实例。如果 field 等于 None，则不校验列表中的元素，意味着任何 list 都是合法的。</p>
+</li>
+<li>
+<p><code>min_length</code></p>
+<p>最小长度。默认为 0，即允许空列表。</p>
+</li>
+<li>
+<p><code>max_length</code></p>
+<p>最大长度。默认为 None，表示不限制最大长度。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p><code>(list, tuple)</code></p>
+</li>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'list'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>['field', 'min_length', 'max_length']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的一个列表，元素由 <code>field</code> 随机生成，长度在 <code>min_length</code> 和 <code>max_length</code> 之间。如果 <code>max_length</code> 等于 <code>None</code>，则假设等于 10。如果 <code>field</code> 等于 <code>None</code>，则列表元素都等于 <code>None</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="timestampfield">TimestampField</h2>
+<p>时间戳字段，继承自 <code>IntegerField</code>。</p>
+<p>合法值是一个无符号的 int32，值介于 <code>0</code> ~ <code>2 ** 32 - 1</code>。</p>
+<p>校验通过后返回原始值。</p>
+<ul>
+<li>
+<p><code>__init__(self, **kwargs)</code></p>
+<p>覆盖父类初始化方法，将 <code>min_value</code> 设为 <code>0</code>，<code>max_value</code> 设为 <code>2 ** 32 - 1</code>。</p>
+<ul>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>IntegerField</code> 和 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'timestamp'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>[ ]</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的时间戳。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="datetimefield">DatetimeField</h2>
+<p>日期时间字段，继承自 <code>BaseField</code>。</p>
+<p>合法值可以是下面其中一个：</p>
+<ul>
+<li>
+<p><code>datatime.datetime</code> 的实例。</p>
+</li>
+<li>
+<p>整数时间戳，如 1531815911。</p>
+</li>
+<li>
+<p>字符串时间戳，如 '1531815911'。</p>
+</li>
+<li>
+<p>符合 <code>dt_format</code> 的日期字符串。假设 <code>dt_format</code> 为 <code>'%Y/%m/%d %H:%M:%S'</code>，则合法的字符串为'2018/01/01 01:01:01'。</p>
+</li>
+</ul>
+<p>校验通过后返回一个 <code>datatime.datetime</code> 的实例。</p>
+<ul>
+<li>
+<p><code>__init__(self, dt_format=None, tzinfo=None, **kwargs)</code></p>
+<ul>
+<li>
+<p><code>dt_format</code></p>
+<p>日期时间格式化字符串。如果 <code>dt_format</code> 等于 <code>None</code>，则将其设为默认值 <code>'%Y/%m/%d %H:%M:%S'</code>。</p>
+</li>
+<li>
+<p><code>tzinfo</code></p>
+<p>时区信息，详情请参考 <a href="https://docs.python.org/3.7/library/datetime.html#datetime.tzinfo">python datetime tzinfo</a>。
+当校验通过后，会将日期的时区设为 <code>tzinfo</code>。
+推荐使用 <a href="https://github.com/newvem/pytz">pytz</a> 库获取各个国家地区的时区信息。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li><code>INTERNAL_TYPE</code></li>
+</ul>
+<p><code>datetime.datetime</code></p>
+<ul>
+<li>
+<p><code>FIELD_TYPE_NAME</code></p>
+<p><code>'datetime'</code></p>
+</li>
+<li>
+<p>PARAMS</p>
+<p><code>['dt_format', 'tzinfo']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的日期时间。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="datefield">DateField</h2>
+<p>日期字段，继承自 <code>BaseField</code>。</p>
+<p>合法值可以是下面其中一个：</p>
+<ul>
+<li>
+<p><code>datatime.date</code> 的实例。</p>
+</li>
+<li>
+<p>整数时间戳，如 1531815911。</p>
+</li>
+<li>
+<p>字符串时间戳，如 '1531815911'。</p>
+</li>
+<li>
+<p>符合 <code>dt_format</code> 的日期字符串。假设 <code>dt_format</code> 为 <code>'%Y/%m/%d'</code>，则合法的字符串为'2018/01/01'。</p>
+</li>
+</ul>
+<p>校验通过后返回一个 <code>datatime.datetime</code> 的实例。</p>
+<ul>
+<li>
+<p><code>__init__(self, dt_format=None, **kwargs)</code></p>
+<ul>
+<li>
+<p><code>dt_format</code></p>
+<p>日期格式化字符串。如果 <code>dt_format</code> 等于 <code>None</code>，则将其设为默认值 <code>'%Y/%m/%d'</code>。</p>
+</li>
+<li>
+<p><code>kwargs</code></p>
+<p>其它参数，例如 <code>BaseField</code> 所需的参数。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类属性</p>
+<ul>
+<li>
+<p><code>INTERNAL_TYPE</code></p>
+<p><code>datetime.date</code></p>
+</li>
+<li>
+<p>FIELD_TYPE_NAME</p>
+<p><code>'date'</code></p>
+</li>
+<li>
+<p><code>PARAMS</code></p>
+<p><code>['dt_format']</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>方法</p>
+<ul>
+<li>
+<p><code>mock_data(self)</code></p>
+<p>返回随机生成的日期。</p>
+</li>
+</ul>
+</li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../advanced/" title="进阶用法" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                进阶用法
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../custom_field/" title="自定义字段" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                自定义字段
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.a59e2a89.js"></script>
+      
+      <script>app.initialize({version:"0.17.5",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
