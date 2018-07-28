@@ -2,6 +2,19 @@
 
 python-validator 是一个类似于 Django ORM 的数据校验库，适用与任何需要进行数据校验的应用，比较常见的是 Web 后端校验前端的输入数据。
 
+---
+
+[![PyPi](https://img.shields.io/pypi/v/python-validator.svg)
+](https://pypi.org/project/python-validator/)
+[![PyPI - Status](https://img.shields.io/pypi/status/python-validator.svg)](https://pypi.org/project/python-validator/)
+[![PyPi - Python Version](https://img.shields.io/pypi/pyversions/python-validator.svg)](https://pypi.org/project/python-validator/)
+[![PyPI - License](https://img.shields.io/pypi/l/python-validator.svg)](https://pypi.org/project/python-validator/)
+
+![GitHub last commit](https://img.shields.io/github/last-commit/ausaki/python-validator.svg)
+[![Build Status](https://travis-ci.org/ausaki/python-validator.svg?branch=master)](https://travis-ci.org/ausaki/python-validator)
+
+---
+
 ## 特性
 
 - 支持 python2 和 python3。
