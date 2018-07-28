@@ -156,15 +156,15 @@ validated_data: None
 
 推荐使用 [pipenv](https://github.com/pypa/pipenv) 来管理项目依赖。
 
-** 假如使用 pipenv：**
+**假如使用 pipenv：**
 
-- `pipenv install`(这一步会安装依赖库以及以测试模式安装 python-validator)
+- `pipenv install`(安装依赖库)
 
 - `pipenv run test`
 
-** 假如使用 pip：**
+**假如使用 pip：**
 
-- `pip install -r requirements.txt`(安装 tox)
+- `pip install -r requirements.txt`(安装依赖库)
 
 - `tox`
 
