@@ -1,4 +1,4 @@
-__version__ = '0.0.1'
+__version__ = '0.0.3'
 
 from .validator import Validator, create_validator
 from .fields import *
