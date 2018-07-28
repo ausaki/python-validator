@@ -1,2 +1,6 @@
 six
 IPy
+pytz
+
+# dev-packages
+pytest

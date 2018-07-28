@@ -1,12 +1,6 @@
 # python-validator
 
-python-validator 是一个类似于 Django ORM 的数据校验库，对于熟悉 Django 的开发人员非常友好。
-
-本篇文档 将会介绍 python-validator 的各种基础用法和高级功能。
-
-## 使用场景
-
-python-validator 适用与任何需要进行数据校验的应用，比较常见的是 Web 后端校验前端的输入数据。
+python-validator 是一个类似于 Django ORM 的数据校验库，适用与任何需要进行数据校验的应用，比较常见的是 Web 后端校验前端的输入数据。
 
 ## 特性
 
@@ -19,6 +13,15 @@ python-validator 适用与任何需要进行数据校验的应用，比较常见
 - 可以打印出清晰的数据结构。
 
 - 易于扩展。
+
+
+## 依赖
+
+- six
+
+- IPy
+
+- pytz[可选，`DatetimeField` 的 `tzinfo` 参数需要一个 `tzinfo` 对象]
 
 
 ## 安装
@@ -144,7 +147,32 @@ validated_data: None
 
 细心的同学可能发现了 `IntegerField` 不接受 “数字字符串”，上面的例子中 `age` 是一个 `IntegerField`，形如 `'24'` 这样的值是非法的。在某些情况下，你可能希望 `IntegerField` 不要这么严格，`'24'` 这样的值也是可以接受的，那么可以把 `strict` 选项设为 `False`，如：`age = IntegerField(min_value=1, max_value=120, default=20, strict=False)`。当 `strict` 选项为 `False` 时，python-validator 会尝试进行类型转换，假如转换失败则会报错。
 
-接下来你可以 [查看进阶](advanced.md) 了解 python-validator 更多的用法，[查看字段 API](fields.md)了解字段的详细信息。
+接下来你可以 [查看进阶](advanced.md) 了解 python-validator 更多的用法，[查看字段 API](fields.md) 了解字段的详细信息。
 
 
+## 测试
 
+使用 pytest 进行代码测试。
+
+推荐使用 [pipenv](https://github.com/pypa/pipenv) 来管理项目依赖。
+
+** 假如使用 pipenv：**
+
+- `pipenv install`(这一步会安装依赖库以及以测试模式安装 python-validator)
+
+- `pipenv run test`
+
+** 假如使用 pip：**
+
+- `pip install -r requirements.txt`
+
+- `pip install -e .`(以测试模式安装 python-validator)
+
+- `pytest tests`
+
+
+## 其它
+
+如果遇到 BUG 或者有任何建议，欢迎提交 issue 或者 PR。
+
+如果希望贡献代码，请尽量编写测试用例并测试你的代码，然后再提交 PR。
