@@ -43,7 +43,7 @@ def test_to_dict():
 def test_presentation():
     uid = uuid.uuid4()
     value = UUIDField().to_presentation(uid)
-    assert value == uid.get_hex()
+    assert value == uid.hex
 
     value = UUIDField(format='str').to_presentation(uid)
     assert value == str(uid)

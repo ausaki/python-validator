@@ -6,20 +6,20 @@ class V(Validator):
 def test_ok():
     data = {'sha_hash': '5'*64}
     v = V(data)
-    assert v.is_valid(), v.format_errors
+    assert v.is_valid(), v.str_errors
 
     class V2(Validator):
         sha_hash = SHAField(version=512)
 
     data = {'sha_hash': '5'*128}
     v = V2(data)
-    assert v.is_valid(), v.format_errors
+    assert v.is_valid(), v.str_errors
 
 
 def test_wrong_value():
     data = {'sha_hash': '5'*30}
     v = V(data)
-    assert not v.is_valid(), v.format_errors
+    assert not v.is_valid(), v.str_errors
 
 
 def test_mock_data():

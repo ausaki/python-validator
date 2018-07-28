@@ -9,10 +9,7 @@ import re
 import copy
 import datetime
 from collections import OrderedDict
-try:
-    import urlparse
-except ImportError:
-    import urllib.parse as urlparse
+from six.moves import urllib_parse as urlparse, range
 from IPy import IP, MAX_IPV4_ADDRESS, MAX_IPV6_ADDRESS
 from . import exceptions
 from .utils import force_text
@@ -293,7 +290,7 @@ class StringField(BaseField):
             max_ = min_ + 100
         size = random.randint(min_, max_)
         random_str = ''.join(
-            [random.choice(string.letters + string.digits) for _ in xrange(size)])
+            [random.choice(string.ascii_letters + string.digits) for _ in range(size)])
         random_str = self.to_internal(random_str)
         return random_str
 
@@ -434,7 +431,7 @@ class SHAField(StringField):
         if version == 1:
             length = 40
         else:
-            length = version / 8 * 2
+            length = int(version / 8 * 2)
         self.version = version
         self.length = length
         kwargs['strict'] = True
@@ -658,11 +655,11 @@ class ListField(BaseField):
         max_ = self.max_length
         if max_ is None:
             max_ = 10
-        length = random.choice(xrange(min_, max_))
+        length = random.choice(range(min_, max_))
 
         data = [None] * length
         if self.field:
-            for i in xrange(length):
+            for i in range(length):
                 data[i] = self.field.mock_data()
         return data
 
