@@ -472,8 +472,8 @@ class EmailField(StringField):
                 'Got wrong email value: {}'.format(value))
 
     def mock_data(self):
-        name = ''.join(random.sample(string.lowercase, 5))
-        domain = '{0}.com'.format(''.join(random.sample(string.lowercase, 3)))
+        name = ''.join(random.sample(string.ascii_lowercase, 5))
+        domain = '{0}.com'.format(''.join(random.sample(string.ascii_lowercase, 3)))
         return '{0}@{1}'.format(name, domain)
 
 
