@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 import six
 from . import exceptions
 from .fields import BaseField, EMPTY_VALUE, create_field, DictField
-
+from .utils import force_str
 
 class ValidatorMetaClass(type):
 
-    def __new__(cls, name, bases, attrs):
+    def __new__(cls, cls_name, bases, attrs):
         fields_map = dict()
         parent_fields_map = dict()
         for parent in bases:
@@ -25,7 +25,7 @@ class ValidatorMetaClass(type):
 
         attrs['_FIELDS_MAP'] = parent_fields_map
 
-        return super(ValidatorMetaClass, cls).__new__(cls, name, bases, attrs)
+        return super(ValidatorMetaClass, cls).__new__(cls, cls_name, bases, attrs)
 
 
 @six.add_metaclass(ValidatorMetaClass)
@@ -147,9 +147,10 @@ def create_validator(data_struct_dict, name=None):
     if name is None:
         name = 'FromDictValidator'
     attrs = {}
-    for name, info in six.iteritems(data_struct_dict):
-        field_type = info['type']
-        if field_type == DictField.FIELD_TYPE_NAME and isinstance(info.get('validator'), dict):
-            info['validator'] = create_validator(info['validator'])
-        attrs[name] = create_field(info)
+    for field_name, field_info in six.iteritems(data_struct_dict):
+        field_type = field_info['type']
+        if field_type == DictField.FIELD_TYPE_NAME and isinstance(field_info.get('validator'), dict):
+            field_info['validator'] = create_validator(field_info['validator'])
+        attrs[field_name] = create_field(field_info)
+    name = force_str(name)
     return type(name, (Validator, ), attrs)
