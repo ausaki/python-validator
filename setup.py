@@ -35,7 +35,10 @@ setup(
               'data validator', 'validation', 'python'],
     packages=['validator'],
     python_requires='>=2.6',
-    install_requires=['six', 'IPy'],
+    install_requires=['six>=1.11.0', 'IPy>=0.83'],
+    extras_require={
+        'tzinfo': ['pytz>=2018.5']
+    },
     license='MIT',
     classifiers=[
         'Development Status :: 5 - Production/Stable',

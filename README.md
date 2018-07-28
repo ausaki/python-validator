@@ -152,7 +152,7 @@ validated_data: None
 
 ## 测试
 
-使用 pytest 进行代码测试。
+使用 tox 和 pytest 进行代码测试。
 
 推荐使用 [pipenv](https://github.com/pypa/pipenv) 来管理项目依赖。
 
@@ -164,11 +164,9 @@ validated_data: None
 
 ** 假如使用 pip：**
 
-- `pip install -r requirements.txt`
+- `pip install -r requirements.txt`(安装 tox)
 
-- `pip install -e .`(以测试模式安装 python-validator)
-
-- `pytest tests`
+- `tox`
 
 
 ## 其它

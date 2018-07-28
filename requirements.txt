@@ -1,6 +1,6 @@
-six
-IPy
-pytz
+six>=1.11.0
+IPy>=0.83
+pytz>=2018.5
 
 # dev-packages
-pytest
+tox

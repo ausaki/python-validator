@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [scripts]
-test = 'pytest tests'
+test = 'tox'
 build = 'python setup.py sdist bdist_wheel'
 publish = 'twine upload -r pypi dist/*'
 publish_test = 'twine upload -r test dist/*'
@@ -19,11 +19,11 @@ python-validator = {path = ".", editable = true}
 "autopep8" = "*"
 mkdocs-material = "*"
 twine = "*"
+pylint = "<2.0.0"
+tox = "*"
+pytz = "*"
 
 [packages]
-six = "*"
-ipy = "*"
-pytz = "*"
 
 [requires]
 python_version = "2.7"

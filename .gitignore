@@ -33,6 +33,7 @@ pip-delete-this-directory.txt
 .cache
 .pytest_cache
 
+
 # env
 .env
 .venv
