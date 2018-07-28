@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, print_function
 from validator import Validator, ListField, DictField, IntegerField, EnumField
 
 
@@ -35,6 +36,6 @@ def test_data():
 
 def test_mock_data():
     data = CardsValidator.mock_data()
-    print 'cards:', data
+    print('cards:', data)
     assert 'cards' in data
     assert 1 <= len(data['cards']) <= 52

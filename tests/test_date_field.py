@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, print_function
 from validator import Validator, DateField
 
 
@@ -34,8 +35,8 @@ def test_to_dict():
     data_dict = V.to_dict()
     assert 'create_at' in data_dict
     field_info = data_dict['create_at']
-    print DateField.PARAMS
-    print field_info
+    print(DateField.PARAMS)
+    print(field_info)
     for p in DateField.PARAMS:
         assert p in field_info, field_info
     assert field_info['type'] == DateField.FIELD_TYPE_NAME

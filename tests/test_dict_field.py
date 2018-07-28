@@ -1,3 +1,4 @@
+from __future__ import  print_function
 from validator import Validator, DictField, IntegerField, create_validator
 
 
@@ -42,7 +43,7 @@ def test_data():
 
 def test_mock_data():
     data = ShapeValidator.mock_data()
-    print 'shape:', data
+    print('shape:', data)
     assert 'rectangle' in data
     assert 'width' in data['rectangle']
     assert 'height' in data['rectangle']
@@ -97,6 +98,6 @@ def test_errors():
     data = {'rectangle': {'width': '10', 'height': 50}}
     v = ShapeValidator(data)
     assert not v.is_valid()
-    print v.errors
-    print v.str_errors
+    print(v.errors)
+    print(v.str_errors)
     
