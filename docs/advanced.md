@@ -2,6 +2,8 @@
 
 python-validator 主要包含 `Validator` 和 `XXXField` 两部分，`Validator` 类似于 Django 中的 Model，用于描述数据结构，其中的 `XXXField` 描述了字段的类型和约束，`XXXField` 负责校验对应的数据。
 
+---
+
 ## 定义 Validator
 
 直接继承 `Validator` 类并列出包含的字段
@@ -36,6 +38,8 @@ python-validator 还支持 [通过数据结构字典创建 Validator](#validator
 
 关于字段参数请参考 [字段 API](fields.md)。
 
+---
+
 ## 校验数据
 
 使用 `is_valid()` 校验数据，数据合法该方法返回 `True`，否则返回 `False`。
@@ -55,6 +59,8 @@ print(v.validated_data) # 获取校验过的数据
 
 `is_valid()` 其实还接受一个可选的参数 `raise_error`，该参数默认为 `False`，
 如果 `raise_error` 为 `True`，那么当数据非法时，`is_valid()` 会触发异常 `ValidationError`，而不是返回 `False`。
+
+---
 
 ## 错误信息
 
@@ -82,6 +88,8 @@ print(v.validated_data) # 获取校验过的数据
 }
 ```
 
+---
+
 ## 自定义字段级的校验方法
 
 `Validator` 在校验数据时会自动调用形如 `validate_xxx` 的方法校验字段数据。
@@ -107,6 +115,8 @@ class UserInfoValidator(Validator):
 
 ** 注意：不建议在 `validate_xxx` 方法中修改 `value`**
 
+---
+
 ## 自定义全局的校验方法
 
 当校验完所有字段的数据后，`Validator` 会调用 `validate` 方法校验全局数据，此时的全局数据是一个已经校验过的 dict。默认的 `validate` 方法直接返回数据，你可以覆盖它以实现自己的校验逻辑。
@@ -129,6 +139,8 @@ class UserInfoValidator(Validator):
         return data
 ```
 
+---
+
 ## 生成测试数据
 
 类方法 `mock_data()` 方法可以生成测试数据，该数据不保证完全通过校验，特别是通过 “自定义字段级的校验方法” 和 “自定义全局的校验方法” 的校验。
@@ -139,6 +151,8 @@ class UserInfoValidator(Validator):
 data = UserInfoValidator.mock_data()
 print(data) # {'age': 74, 'name': u'R7fuZaWOCPUVeYSQqaUvI', 'sex': 'f'}
 ```
+
+---
 
 ## to_dict
 
@@ -179,6 +193,8 @@ print(data) # {'age': 74, 'name': u'R7fuZaWOCPUVeYSQqaUvI', 'sex': 'f'}
 }
 ```
 
+---
+
 ## 数据结构字典
 
 数据结构字典的 key 是字段名称，value 是描述字段的类型和初始化参数的字典。
@@ -198,6 +214,8 @@ print(data) # {'age': 74, 'name': u'R7fuZaWOCPUVeYSQqaUvI', 'sex': 'f'}
 - DictField
 
 - DatetimeField
+
+---
 
 ## 通过数据结构字典创建 Validator
 
