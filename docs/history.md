@@ -1,10 +1,25 @@
 # 历史版本
 
-# Version 0.0.1
+## Version 0.0.4
+
+- DatetimeField 的 tzinfo 参数支持时区名称字符串
+
+- 放弃 python2.6
+
+
+## Version 0.0.3
+
+- 兼容 python3
+
+- 支持通过数据字典创建Validator（create_validator）
+
+- 使用 TravisCI 测试代码
+
+## Version 0.0.1
 
 第一个发布版本.
 
-- 支持一下字段:
+- 支持以下字段:
 
     - StringField
     - NumberField

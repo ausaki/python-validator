@@ -1,6 +1,6 @@
 # 进阶
 
-python-validator 主要包含 `Validator` 和 `XXXField` 两部分，`Validator` 类似于 Django 中的 Model，用于描述数据结构，其中的 `XXXField` 描述了字段的类型和约束，`XXXField` 负责校验对应的数据。
+python-validator 主要包含 `Validator` 和 `XXXField` 两部分，`Validator` 类似于 Django 中的 Model，用于描述数据结构，其中的 `XXXField` 描述了字段的类型和约束并负责校验对应的数据。
 
 ---
 
@@ -34,6 +34,7 @@ data = {
     'sex': 'f'
 }
 ```
+
 python-validator 还支持 [通过数据结构字典创建 Validator](#validator_1)。
 
 关于字段参数请参考 [字段 API](fields.md)。
@@ -110,7 +111,6 @@ class UserInfoValidator(Validator):
     def validate_name(self, value):
         if value == 'foo':
             raise FieldValidationError('"foo" is invalid')
-
 ```
 
 ** 注意：不建议在 `validate_xxx` 方法中修改 `value`**
@@ -201,19 +201,98 @@ print(data) # {'age': 74, 'name': u'R7fuZaWOCPUVeYSQqaUvI', 'sex': 'f'}
 
 以上面 `to_dict` 返回的字典为例，`age`， `name`，和 `sex` 都是字段名称，其对应的值包含了字段类型和初始化参数。
 
-`type` 表示字符串形式的字段类型，每个字段的字符串形式的字段类型保存在 `FIELD_TYPE_NAME` 属性中。剩余的都是字段的初始化参数。
+`type` 表示字符串形式的字段类型，每个字段的字符串形式的字段类型保存在 `FIELD_TYPE_NAME` 属性中。剩余的参数都是字段的初始化参数。
 
-假如 `default`等于 `EMPTY_VALUE`，为了方便则使用'__empty__'表示。
+假如 `default` 等于 `EMPTY_VALUE`，为了方便则使用 `'__empty__'` 表示。
 
 ### 特殊字段
 
 - ListField
 
-    
+    ListField 是复合数据，需要通过 `field` 参数指明列表项的类型，`field` 参数同样适用字典来表示。例如：
+
+```python
+class V(Validator):
+    cards = ListField(min_length=1, max_length=52,
+                    field=IntegerField(min_value=1, max_value=13))
+
+print(json.dumps(V.to_dict(), indent=4))
+# json output
+{
+    "cards": {
+        "min_length": 1,
+        "strict": true,
+        "default": "__empty__",
+        "required": false,
+        "field": {
+            "required": false,
+            "default": "__empty__",
+            "max_value": 13,
+            "min_value": 1,
+            "strict": true,
+            "validators": [],
+            "type": "integer"
+        },
+        "max_length": 52,
+        "validators": [],
+        "type": "list"
+    }
+}
+```
+
 
 - DictField
 
-- DatetimeField
+    DictField 是复合数据，需要通过 `validator` 参数校验字典内部的各个字段。`validator` 就是 `Validator` 的实例，因此可以通过字典来描述 `validator`，就像一个 `validator` 嵌套了另外一个 `validator`。例如：
+
+```python
+data = {
+    'rectangle': {
+        'type': 'dict',
+        'validator': {
+            'width': {
+                'type': 'integer',
+                'default': '__empty__'
+            },
+            'height': {
+                'type': 'integer',
+            }
+        },
+    }
+}
+V = create_validator(data)
+print(json.dumps(V.to_dict(), indent=4))
+# output
+{
+    "rectangle": {
+        "default": "__empty__",
+        "required": false,
+        "strict": true,
+        "validator": {
+            "width": {
+                "required": false,
+                "default": "__empty__",
+                "max_value": null,
+                "min_value": null,
+                "strict": true,
+                "validators": [],
+                "type": "integer"
+            },
+            "height": {
+                "required": false,
+                "default": "__empty__",
+                "max_value": null,
+                "min_value": null,
+                "strict": true,
+                "validators": [],
+                "type": "integer"
+            }
+        },
+        "validators": [],
+        "type": "dict"
+    }
+}
+```
 
 ---
 
