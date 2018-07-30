@@ -34,7 +34,7 @@ setup(
     keywords=['validator', 'like Django-ORM',
               'data validator', 'validation', 'python'],
     packages=['validator'],
-    python_requires='>=2.6',
+    python_requires='>=2.7',
     install_requires=['six>=1.11.0', 'IPy>=0.83'],
     extras_require={
         'tzinfo': ['pytz>=2018.5']
@@ -48,7 +48,6 @@ setup(
         'Topic :: Software Development :: Libraries',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
