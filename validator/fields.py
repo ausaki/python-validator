@@ -470,7 +470,8 @@ class EmailField(StringField):
 
     def mock_data(self):
         name = ''.join(random.sample(string.ascii_lowercase, 5))
-        domain = '{0}.com'.format(''.join(random.sample(string.ascii_lowercase, 3)))
+        domain = '{0}.com'.format(
+            ''.join(random.sample(string.ascii_lowercase, 3)))
         return '{0}@{1}'.format(name, domain)
 
 
@@ -585,7 +586,7 @@ class DictField(BaseField):
         else:
             value = copy.deepcopy(value)
         return value
-    
+
     def to_dict(self):
         d = super(DictField, self).to_dict()
         if d['validator'] is not None:
@@ -690,6 +691,13 @@ class DatetimeField(BaseField):
         if dt_format is None:
             dt_format = self.DEFAULT_FORMAT
         self.dt_format = dt_format
+        if isinstance(tzinfo, six.string_types):
+            try:
+                import pytz
+            except ImportError as e:
+                raise ValueError(
+                    'Cant create DatetimeField instance with tzinfo {}, please install pytz and try again'.format(params['tzinfo']))
+            tzinfo = pytz.timezone(tzinfo)
         self.tzinfo = tzinfo
         kwargs.setdefault('strict', False)
         super(DatetimeField, self).__init__(**kwargs)
@@ -722,16 +730,6 @@ class DatetimeField(BaseField):
         if d['tzinfo'] is not None:
             d['tzinfo'] = force_text(d['tzinfo'])
         return d
-
-    @classmethod
-    def from_dict(cls, params):
-        if 'tzinfo' in params and isinstance(params['tzinfo'], six.string_types):
-            try:
-                import pytz
-            except ImportError as e:
-                raise ValueError('Cant create DatetimeField instance with tzinfo {}, please install pytz and try again'.format(params['tzinfo']))
-            params['tzinfo'] = pytz.timezone(params['tzinfo'])
-        return super(DatetimeField, cls).from_dict(params)
 
     def mock_data(self):
         return self.INTERNAL_TYPE.fromtimestamp(random.randint(0, 2 ** 32 - 1))
