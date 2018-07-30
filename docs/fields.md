@@ -25,9 +25,9 @@
 
 - `create_field(field_info)`
 
-    根据 `field_info` 创建一个字段实例，`field_info` 是一个字典，例如 `string_field.to_dict()` 的返回值。
+    根据 `field_info` 创建一个字段实例，`field_info` 是一个字典，包含了字段类型及初始化参数，例如 `string_field.to_dict()` 的返回值。
 
-    一般不会直接使用到该方法，如果想要通过数据结构字典创建 `Validator`，请查看[通过数据结构字典创建 Validator](advanced.md#validator_1)。
+    一般不会直接使用到该方法，如果想要通过数据结构字典创建 `Validator`，请查看 [通过数据结构字典创建 Validator](advanced.md#validator_1)。
 
 
 
@@ -638,6 +638,10 @@ IP 地址字段，继承自 `BaseField`。
 
 - 方法
 
+    - `from_dict(cls, params)`
+
+        `field` 值可以是一个 `dict`，如果发现 `field` 是一个 `dict`，会自动调用 `create_field` 创建相应的字段实例。
+
     - `mock_data(self)`
 
         返回随机生成的一个列表，元素由 `field` 随机生成，长度在 `min_length` 和 `max_length` 之间。如果 `max_length` 等于 `None`，则假设等于 10。如果 `field` 等于 `None`，则列表元素都等于 `None`。
@@ -703,7 +707,7 @@ IP 地址字段，继承自 `BaseField`。
 
     - `tzinfo`
 
-        时区信息，详情请参考 [python datetime tzinfo](https://docs.python.org/3.7/library/datetime.html#datetime.tzinfo)。
+        时区信息，可以是一个时区名称字符串或者 tzinfo 实例，详情请参考 [python datetime tzinfo](https://docs.python.org/3.7/library/datetime.html#datetime.tzinfo)。
         当校验通过后，会将日期的时区设为 `tzinfo`。
         推荐使用 [pytz](https://github.com/newvem/pytz) 库获取各个国家地区的时区信息。
 
