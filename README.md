@@ -49,10 +49,10 @@ python-validator 是一个类似于 Django ORM 的数据校验库，适用与任
 假设现在正在开发一个上传用户信息的接口 `POST /api/user/`，用户信息如下：
 
 | 字段 | 类型 | 描述 |
-|--|--|--|
-|name|String| 必选 |
-|age|integer| 可选，默认 20|
-|sex|String, 'f'表示女, 'm'表示男 | 可选, 默认 None|
+|--- | --- | --- |
+| name | String | 必选 |
+| age | integer | 可选，默认 20 |
+| sex | String, 'f'表示女, 'm'表示男 | 可选, 默认 None |
 
 原始的、枯燥无味的、重复性劳动的数据校验代码可能是下面这样：
 
@@ -92,7 +92,7 @@ def user(request):
 
 - 从数据校验的代码无法轻易看出用户信息的数据结构，即字段是什么类型的，是否可选，默认值是什么。
 
-** 使用 python-validator 校验数据 **
+**使用 python-validator 校验数据**
 
 首先定义一个 UserInfoValidator 类
 
