@@ -515,6 +515,7 @@
                 
                 <h1 id="python-validator">python-validator</h1>
 <p>python-validator 是一个类似于 Django ORM 的数据校验库，适用与任何需要进行数据校验的应用，比较常见的是 Web 后端校验前端的输入数据。</p>
+<p><a href="https://ausaki.github.io/python-validator">文档</a></p>
 <hr />
 <p><a href="https://pypi.org/project/python-validator/"><img alt="PyPi" src="https://img.shields.io/pypi/v/python-validator.svg" />
 </a>
@@ -682,7 +683,7 @@ validated_data: None
 </code></pre>
 
 <p>细心的同学可能发现了 <code>IntegerField</code> 不接受 “数字字符串”，上面的例子中 <code>age</code> 是一个 <code>IntegerField</code>，形如 <code>'24'</code> 这样的值是非法的。在某些情况下，你可能希望 <code>IntegerField</code> 不要这么严格，<code>'24'</code> 这样的值也是可以接受的，那么可以把 <code>strict</code> 选项设为 <code>False</code>，如：<code>age = IntegerField(min_value=1, max_value=120, default=20, strict=False)</code>。当 <code>strict</code> 选项为 <code>False</code> 时，python-validator 会尝试进行类型转换，假如转换失败则会报错。</p>
-<p>接下来你可以 <a href="advanced/">查看进阶</a> 了解 python-validator 更多的用法，<a href="fields/">查看字段 API</a> 了解字段的详细信息。</p>
+<p>接下来你可以 <a href="https://ausaki.github.io/python-validator/advanced/">查看进阶</a> 了解 python-validator 更多的用法，<a href="https://ausaki.github.io/python-validator/fields/">查看字段 API</a> 了解字段的详细信息。</p>
 <h2 id="_5">测试</h2>
 <p>使用 tox 和 pytest 进行代码测试。</p>
 <p>推荐使用 <a href="https://github.com/pypa/pipenv">pipenv</a> 来管理项目依赖。</p>
