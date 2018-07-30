@@ -8,6 +8,11 @@ python:
     - "3.6"
     - "3.7-dev"
 
+branches:
+  only:
+  - master
+  - develop
+
 install: 
   - pip install -e .[tzinfo]
 
