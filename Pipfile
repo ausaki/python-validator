@@ -11,6 +11,8 @@ publish_test = 'twine upload -r test dist/*'
 serve_doc = 'mkdocs serve -a 127.0.0.1:8010'
 build_doc = 'mkdocs build'
 publish_doc = 'mkdocs gh-deploy'
+mkmsg = 'bash -c "xgettext -L python validator/*.py -o validator/locale/python-validator.po"'
+
 
 [dev-packages]
 pytest = "*"

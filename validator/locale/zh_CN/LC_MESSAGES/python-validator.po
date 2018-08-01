@@ -1,0 +1,149 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-30 18:51+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: validator/exceptions.py:22
+msgid "Base validation error"
+msgstr ""
+
+#: validator/exceptions.py:23 validator/exceptions.py:57
+#: validator/exceptions.py:63 validator/exceptions.py:69
+msgid "error"
+msgstr "错误"
+
+#: validator/exceptions.py:56
+msgid "Field is required"
+msgstr "必须提供该字段"
+
+#: validator/exceptions.py:62
+msgid "Validation error"
+msgstr "校验错误"
+
+#: validator/exceptions.py:68
+msgid "field Validation error"
+msgstr "字段校验错误"
+
+#: validator/fields.py:35
+msgid "not support this field: {}"
+msgstr "不支持这个字段: {}"
+
+#: validator/fields.py:115
+#, python-brace-format
+msgid ""
+"the max value must greater than or equals the min value, got min "
+"value={min}, max value={max}"
+msgstr "最大值必须大于或等于最小值，发现最小值={min}，最大值={max}"
+
+#: validator/fields.py:167
+#, python-brace-format
+msgid "got a wrong type: {0}, expect {1}"
+msgstr " 错误的字段类型：{0}，期望 {1}"
+
+#: validator/fields.py:173
+#, python-brace-format
+msgid "type convertion({0} -> {1}) is failed: {2}"
+msgstr "类型转换（{0} -> {2}）失败：{2}"
+
+#: validator/fields.py:266
+msgid "string is too short, min-lenght is {}"
+msgstr "字符串太短，最小长度是：{}"
+
+#: validator/fields.py:269
+msgid "string is too long, max-lenght is {}"
+msgstr "字符串太长，最大长度是：{}"
+
+#: validator/fields.py:273
+#, python-brace-format
+msgid "{0} not match {1}"
+msgstr "{0} 和 {1} 不匹配"
+
+#: validator/fields.py:318
+msgid "value is too small, min-value is {}"
+msgstr "值太小，最小值是 {}"
+
+#: validator/fields.py:322
+msgid "value is too big, max-value is {}"
+msgstr "值太大，最大值是 {}"
+
+#: validator/fields.py:378
+msgid "not supports format: {}"
+msgstr "不支持的格式：{}"
+
+#: validator/fields.py:416
+msgid "Got wrong md5 value: {}"
+msgstr "错误的 MD5格式：{}"
+
+#: validator/fields.py:429
+#, python-brace-format
+msgid "{0} not support, support versions are: {1}"
+msgstr "不支持 {0}，支持的版本有：{1}"
+
+#: validator/fields.py:449
+#, python-brace-format
+msgid "Got wrong sha{0} value: {1}"
+msgstr "错误的 sha{0} 值：{1}"
+
+#: validator/fields.py:469
+msgid "Got wrong email value: {}"
+msgstr "错误的 Email 值：{}"
+
+#: validator/fields.py:486
+msgid "{} version is not supported"
+msgstr "不支持版本{}"
+
+#: validator/fields.py:499
+msgid "expected an ipv4 address, got {}"
+msgstr "期望 ipv4地址，发现 {}"
+
+#: validator/fields.py:534
+msgid "schema is lost"
+msgstr "协议名丢失"
+
+#: validator/fields.py:536
+msgid "hostname is lost"
+msgstr "主机名丢失"
+
+#: validator/fields.py:558
+msgid "{!r} not in the choices"
+msgstr "{!r}不在可选值里面"
+
+#: validator/fields.py:611
+msgid "field param expect a instance of BaseField, but got {!r}"
+msgstr "field 参数希望一个字段实例，但是是一个{!r}"
+
+#: validator/fields.py:624
+msgid "this list has too few elements, min length is {}"
+msgstr "列表元素太少，最小长度是 {}"
+
+#: validator/fields.py:628
+msgid "this list has too many elements, max length is {}"
+msgstr "列表元素太多，最大长度是 {}"
+
+#: validator/fields.py:681
+msgid "Got wrong timestamp: {}"
+msgstr "错误的时间戳：{}"
+
+#: validator/fields.py:699
+msgid ""
+"Cant create DatetimeField instance with tzinfo {}, please install pytz and "
+"try again"
+msgstr "无法使用 tzinfo（{}）创建DatetimeField，请安装 pytz 后重试"
+
+#: validator/fields.py:719
+msgid "Got wrong datetime value: {}"
+msgstr "错误的 datetime：{}"
