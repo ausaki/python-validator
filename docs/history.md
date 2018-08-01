@@ -1,8 +1,10 @@
 # 历史版本
 
-## Version 0.0.5
+## Version 0.0.6
 
 - 支持i18n
+
+- 修复 bug：BaseValidationError.__str__  在 python3 返回 bytes
 
 
 ## Version 0.0.5
