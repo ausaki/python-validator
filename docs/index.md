@@ -13,8 +13,8 @@ python-validator 是一个类似于 Django ORM 的数据校验库，适用与任
 [![PyPI - License](https://img.shields.io/pypi/l/python-validator.svg)](https://pypi.org/project/python-validator/)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/ausaki/python-validator.svg)
-[![Build Status](https://travis-ci.org/ausaki/python-validator.svg?branch=master)](https://travis-ci.org/ausaki/python-validator)
-
+[![Build Status - master](https://travis-ci.org/ausaki/python-validator.svg?branch=master)](https://travis-ci.org/ausaki/python-validator)
+[![Build Status - develop](https://travis-ci.org/ausaki/python-validator.svg?branch=develop)](https://travis-ci.org/ausaki/python-validator)
 ---
 
 ## 特性
