@@ -733,8 +733,8 @@
 <ul>
 <li>
 <p><code>create_field(field_info)</code></p>
-<p>根据 <code>field_info</code> 创建一个字段实例，<code>field_info</code> 是一个字典，例如 <code>string_field.to_dict()</code> 的返回值。</p>
-<p>一般不会直接使用到该方法，如果想要通过数据结构字典创建 <code>Validator</code>，请查看<a href="../advanced/#validator_1">通过数据结构字典创建 Validator</a>。</p>
+<p>根据 <code>field_info</code> 创建一个字段实例，<code>field_info</code> 是一个字典，包含了字段类型及初始化参数，例如 <code>string_field.to_dict()</code> 的返回值。</p>
+<p>一般不会直接使用到该方法，如果想要通过数据结构字典创建 <code>Validator</code>，请查看 <a href="../advanced/#validator_1">通过数据结构字典创建 Validator</a>。</p>
 </li>
 </ul>
 <h2 id="basefield">BaseField</h2>
@@ -1420,6 +1420,10 @@
 <p>方法</p>
 <ul>
 <li>
+<p><code>from_dict(cls, params)</code></p>
+<p><code>field</code> 值可以是一个 <code>dict</code>，如果发现 <code>field</code> 是一个 <code>dict</code>，会自动调用 <code>create_field</code> 创建相应的字段实例。</p>
+</li>
+<li>
 <p><code>mock_data(self)</code></p>
 <p>返回随机生成的一个列表，元素由 <code>field</code> 随机生成，长度在 <code>min_length</code> 和 <code>max_length</code> 之间。如果 <code>max_length</code> 等于 <code>None</code>，则假设等于 10。如果 <code>field</code> 等于 <code>None</code>，则列表元素都等于 <code>None</code>。</p>
 </li>
@@ -1494,7 +1498,7 @@
 </li>
 <li>
 <p><code>tzinfo</code></p>
-<p>时区信息，详情请参考 <a href="https://docs.python.org/3.7/library/datetime.html#datetime.tzinfo">python datetime tzinfo</a>。
+<p>时区信息，可以是一个时区名称字符串或者 tzinfo 实例，详情请参考 <a href="https://docs.python.org/3.7/library/datetime.html#datetime.tzinfo">python datetime tzinfo</a>。
 当校验通过后，会将日期的时区设为 <code>tzinfo</code>。
 推荐使用 <a href="https://github.com/newvem/pytz">pytz</a> 库获取各个国家地区的时区信息。</p>
 </li>

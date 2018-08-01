@@ -582,7 +582,7 @@
                 
                 
                 <h1 id="_1">进阶</h1>
-<p>python-validator 主要包含 <code>Validator</code> 和 <code>XXXField</code> 两部分，<code>Validator</code> 类似于 Django 中的 Model，用于描述数据结构，其中的 <code>XXXField</code> 描述了字段的类型和约束，<code>XXXField</code> 负责校验对应的数据。</p>
+<p>python-validator 主要包含 <code>Validator</code> 和 <code>XXXField</code> 两部分，<code>Validator</code> 类似于 Django 中的 Model，用于描述数据结构，其中的 <code>XXXField</code> 描述了字段的类型和约束并负责校验对应的数据。</p>
 <hr />
 <h2 id="validator">定义 Validator</h2>
 <p>直接继承 <code>Validator</code> 类并列出包含的字段</p>
@@ -672,7 +672,6 @@ class UserInfoValidator(Validator):
     def validate_name(self, value):
         if value == 'foo':
             raise FieldValidationError('&quot;foo&quot; is invalid')
-
 </code></pre>
 
 <p><strong> 注意：不建议在 <code>validate_xxx</code> 方法中修改 <code>value</code></strong></p>
@@ -744,20 +743,97 @@ print(data) # {'age': 74, 'name': u'R7fuZaWOCPUVeYSQqaUvI', 'sex': 'f'}
 <h2 id="_7">数据结构字典</h2>
 <p>数据结构字典的 key 是字段名称，value 是描述字段的类型和初始化参数的字典。</p>
 <p>以上面 <code>to_dict</code> 返回的字典为例，<code>age</code>， <code>name</code>，和 <code>sex</code> 都是字段名称，其对应的值包含了字段类型和初始化参数。</p>
-<p><code>type</code> 表示字符串形式的字段类型，每个字段的字符串形式的字段类型保存在 <code>FIELD_TYPE_NAME</code> 属性中。剩余的都是字段的初始化参数。</p>
-<p>假如 <code>default</code>等于 <code>EMPTY_VALUE</code>，为了方便则使用'<strong>empty</strong>'表示。</p>
+<p><code>type</code> 表示字符串形式的字段类型，每个字段的字符串形式的字段类型保存在 <code>FIELD_TYPE_NAME</code> 属性中。剩余的参数都是字段的初始化参数。</p>
+<p>假如 <code>default</code> 等于 <code>EMPTY_VALUE</code>，为了方便则使用 <code>'__empty__'</code> 表示。</p>
 <h3 id="_8">特殊字段</h3>
 <ul>
 <li>
 <p>ListField</p>
-</li>
-<li>
-<p>DictField</p>
-</li>
-<li>
-<p>DatetimeField</p>
+<p>ListField 是复合数据，需要通过 <code>field</code> 参数指明列表项的类型，<code>field</code> 参数同样适用字典来表示。例如：</p>
 </li>
 </ul>
+<pre><code class="python">class V(Validator):
+    cards = ListField(min_length=1, max_length=52,
+                    field=IntegerField(min_value=1, max_value=13))
+
+print(json.dumps(V.to_dict(), indent=4))
+# json output
+{
+    &quot;cards&quot;: {
+        &quot;min_length&quot;: 1,
+        &quot;strict&quot;: true,
+        &quot;default&quot;: &quot;__empty__&quot;,
+        &quot;required&quot;: false,
+        &quot;field&quot;: {
+            &quot;required&quot;: false,
+            &quot;default&quot;: &quot;__empty__&quot;,
+            &quot;max_value&quot;: 13,
+            &quot;min_value&quot;: 1,
+            &quot;strict&quot;: true,
+            &quot;validators&quot;: [],
+            &quot;type&quot;: &quot;integer&quot;
+        },
+        &quot;max_length&quot;: 52,
+        &quot;validators&quot;: [],
+        &quot;type&quot;: &quot;list&quot;
+    }
+}
+</code></pre>
+
+<ul>
+<li>
+<p>DictField</p>
+<p>DictField 是复合数据，需要通过 <code>validator</code> 参数校验字典内部的各个字段。<code>validator</code> 就是 <code>Validator</code> 的实例，因此可以通过字典来描述 <code>validator</code>，就像一个 <code>validator</code> 嵌套了另外一个 <code>validator</code>。例如：</p>
+</li>
+</ul>
+<pre><code class="python">data = {
+    'rectangle': {
+        'type': 'dict',
+        'validator': {
+            'width': {
+                'type': 'integer',
+                'default': '__empty__'
+            },
+            'height': {
+                'type': 'integer',
+            }
+        },
+    }
+}
+V = create_validator(data)
+print(json.dumps(V.to_dict(), indent=4))
+# output
+{
+    &quot;rectangle&quot;: {
+        &quot;default&quot;: &quot;__empty__&quot;,
+        &quot;required&quot;: false,
+        &quot;strict&quot;: true,
+        &quot;validator&quot;: {
+            &quot;width&quot;: {
+                &quot;required&quot;: false,
+                &quot;default&quot;: &quot;__empty__&quot;,
+                &quot;max_value&quot;: null,
+                &quot;min_value&quot;: null,
+                &quot;strict&quot;: true,
+                &quot;validators&quot;: [],
+                &quot;type&quot;: &quot;integer&quot;
+            },
+            &quot;height&quot;: {
+                &quot;required&quot;: false,
+                &quot;default&quot;: &quot;__empty__&quot;,
+                &quot;max_value&quot;: null,
+                &quot;min_value&quot;: null,
+                &quot;strict&quot;: true,
+                &quot;validators&quot;: [],
+                &quot;type&quot;: &quot;integer&quot;
+            }
+        },
+        &quot;validators&quot;: [],
+        &quot;type&quot;: &quot;dict&quot;
+    }
+}
+</code></pre>
+
 <hr />
 <h2 id="validator_1">通过数据结构字典创建 Validator</h2>
 <p><code>create_validator(data_struct_dict, name=None)</code></p>
