@@ -2,6 +2,11 @@
 
 ## Version 0.0.5
 
+- 支持i18n
+
+
+## Version 0.0.5
+
 - 修复 bug：当字段是可选的且数据中缺失该字段时，validated_data 将该字段值设为 None。正确的逻辑应该和原数据保持一致，validated_data 应该不存在该字段值。
 
 

@@ -9,5 +9,5 @@ print(__all__)
 print(StringField().to_dict())
 print(DateField._get_all_params())
 
-e = FieldValidationError('放大森阿东')
+e = FieldValidationError()
 print(repr(e))
