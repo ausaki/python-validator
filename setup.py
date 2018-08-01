@@ -36,9 +36,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     python_requires='>=2.7',
-    install_requires=['six>=1.11.0', 'IPy>=0.83'],
+    install_requires=['six', 'IPy'],
     extras_require={
-        'tzinfo': ['pytz>=2018.5']
+        'tzinfo': ['pytz']
     },
     license='MIT',
     classifiers=[
