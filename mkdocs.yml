@@ -4,6 +4,7 @@ theme:
 pages:
   - 首页: index.md
   - 进阶用法: advanced.md
+  - 国际化: i18n.md
   - 字段:
     - 字段 API: fields.md
     - 自定义字段: custom_field.md

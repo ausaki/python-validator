@@ -33,7 +33,8 @@ setup(
     url="http://github.com/ausaki/python-validator",
     keywords=['validator', 'like Django-ORM',
               'data validator', 'validation', 'python'],
-    packages=['validator'],
+    packages=find_packages(),
+    include_package_data=True,
     python_requires='>=2.7',
     install_requires=['six>=1.11.0', 'IPy>=0.83'],
     extras_require={
