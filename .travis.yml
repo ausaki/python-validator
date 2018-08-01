@@ -16,4 +16,4 @@ install:
   - pip install -e .[tzinfo]
 
 script:
-    - pytest
+    - py.test tests
