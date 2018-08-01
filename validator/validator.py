@@ -46,12 +46,13 @@ class Validator(object):
         data = {}
         for name, field in six.iteritems(self._FIELDS_MAP):
             value = self.raw_data.get(name, field.get_default())
-            if value is EMPTY_VALUE and field.is_required():
-                self.errors[name] = exceptions.FieldRequiredError()
+            if value is EMPTY_VALUE:
+                if field.is_required():
+                    self.errors[name] = exceptions.FieldRequiredError()
                 continue
 
-            # dont need to validate EMPTY_VALUE or None
-            if value is EMPTY_VALUE or None:
+            # dont need to validate None
+            if value is None:
                 data[name] = None
                 continue
 
