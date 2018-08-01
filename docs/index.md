@@ -92,7 +92,7 @@ def user(request):
 
 - 从数据校验的代码无法轻易看出用户信息的数据结构，即字段是什么类型的，是否可选，默认值是什么。
 
-** 使用 python-validator 校验数据 **
+**使用 python-validator 校验数据**
 
 首先定义一个 UserInfoValidator 类
 
