@@ -33,7 +33,7 @@ v = UserInfoValidator(data)
 print('错误数据')
 print('data: ', data)
 print('is_valid:', v.is_valid())
-print('errors:', v.errors)
+print('errors:', v.errors['age'])
 print('str_errors:', v.str_errors)
 print('validated_data:', v.validated_data)
 

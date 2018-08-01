@@ -13,7 +13,7 @@ from six.moves import urllib_parse as urlparse, range
 from IPy import IP, MAX_IPV4_ADDRESS, MAX_IPV6_ADDRESS
 from . import exceptions
 from .utils import force_text
-
+from .translation import gettext as _
 
 __all__ = [
     # Don't need to add field to here by hand,
@@ -32,7 +32,7 @@ def create_field(field_info):
     """
     field_type = field_info.get('type')
     if field_type not in FIELDS_NAME_MAP:
-        raise ValueError('not support this field: {}'.format(field_type))
+        raise ValueError(_('not support this field: {}').format(field_type))
     field_class = FIELDS_NAME_MAP.get(field_type)
     params = dict(field_info)
     params.pop('type')
@@ -112,7 +112,7 @@ class BaseField(object):
     @classmethod
     def _check_value_range(cls, min_value, max_value):
         if max_value is not None and max_value < min_value:
-            raise ValueError('the max value must greater than or equals the min value, got min value={min}, max value={max}'.format(
+            raise ValueError(_('the max value must greater than or equals the min value, got min value={min}, max value={max}').format(
                 min=min_value, max=max_value))
 
     def _convert_type(self, value):
@@ -164,13 +164,13 @@ class BaseField(object):
         if not isinstance(value, self.INTERNAL_TYPE):
             if self.strict:
                 raise exceptions.FieldValidationError(
-                    'got a wrong type: {0}, expect {1}'.format(type(value).__name__, self.FIELD_TYPE_NAME))
+                    _('got a wrong type: {0}, expect {1}').format(type(value).__name__, self.FIELD_TYPE_NAME))
             else:
                 try:
                     value = self._convert_type(value)
                 except (ValueError, TypeError) as e:
                     raise exceptions.FieldValidationError(
-                        'type convertion({0} -> {1}) is failed: {2}'.format(type(value).__name__, self.FIELD_TYPE_NAME, str(e)))
+                        _('type convertion({0} -> {1}) is failed: {2}').format(type(value).__name__, self.FIELD_TYPE_NAME, str(e)))
         return value
 
     def is_required(self):
@@ -263,14 +263,14 @@ class StringField(BaseField):
 
         if len(value) < self.min_length:
             raise exceptions.FieldValidationError(
-                'string is too short, min-lenght is {}'.format(self.min_length))
+                _('string is too short, min-lenght is {}').format(self.min_length))
         if self.max_length and len(value) > self.max_length:
             raise exceptions.FieldValidationError(
-                'string is too long, max-lenght is {}'.format(self.max_length))
+                _('string is too long, max-lenght is {}').format(self.max_length))
 
         if not self._match(value):
             raise exceptions.FieldValidationError(
-                '{0} not match {1}'.format(self.regex.pattern, value))
+                _('{0} not match {1}').format(self.regex.pattern, value))
 
         return value
 
@@ -315,11 +315,11 @@ class NumberField(BaseField):
 
         if self.min_value is not None and value < self.min_value:
             raise exceptions.FieldValidationError(
-                'value is too small, min-value is {}'.format(self.min_value))
+                _('value is too small, min-value is {}').format(self.min_value))
 
         if self.max_value is not None and value > self.max_value:
             raise exceptions.FieldValidationError(
-                'value is too big, max-value is {}'.format(self.max_value))
+                _('value is too big, max-value is {}').format(self.max_value))
 
         return value
 
@@ -375,7 +375,7 @@ class UUIDField(BaseField):
         format: what format used when to_presentation, supports 'hex', 'str', 'int', 'bytes', 'bytes_le'
         """
         if format not in self.SUPPORT_FORMATS:
-            raise ValueError('not supports format: {}'.format(format))
+            raise ValueError(_('not supports format: {}').format(format))
         self.format = format
 
         kwargs.setdefault('strict', False)
@@ -413,7 +413,7 @@ class MD5Field(StringField):
             return super(MD5Field, self)._validate(value)
         except exceptions.FieldValidationError as e:
             raise exceptions.FieldValidationError(
-                'Got wrong md5 value: {}'.format(value))
+                _('Got wrong md5 value: {}').format(value))
 
     def mock_data(self):
         return ''.join([random.choice(string.hexdigits) for i in range(32)])
@@ -426,7 +426,7 @@ class SHAField(StringField):
 
     def __init__(self, version=256, **kwargs):
         if version not in self.SUPPORT_VERSION:
-            raise ValueError('{0} not support, support versions are: {1}'.format(
+            raise ValueError(_('{0} not support, support versions are: {1}').format(
                 version, self.SUPPORT_VERSION))
         if version == 1:
             length = 40
@@ -446,7 +446,7 @@ class SHAField(StringField):
             return super(SHAField, self)._validate(value)
         except exceptions.FieldValidationError as e:
             raise exceptions.FieldValidationError(
-                'Got wrong sha{0} value: {1}'.format(self.version, value))
+                _('Got wrong sha{0} value: {1}').format(self.version, value))
 
     def mock_data(self):
         return ''.join([random.choice(string.hexdigits) for i in range(self.length)])
@@ -466,7 +466,7 @@ class EmailField(StringField):
             return super(EmailField, self)._validate(value)
         except exceptions.FieldValidationError as e:
             raise exceptions.FieldValidationError(
-                'Got wrong email value: {}'.format(value))
+                _('Got wrong email value: {}').format(value))
 
     def mock_data(self):
         name = ''.join(random.sample(string.ascii_lowercase, 5))
@@ -483,7 +483,7 @@ class IPAddressField(BaseField):
 
     def __init__(self, version='both', **kwargs):
         if version not in self.SUPPORT_VERSIONS:
-            raise ValueError('{} version is not supported'.format(version))
+            raise ValueError(_('{} version is not supported').format(version))
         self.version = version
 
         kwargs.setdefault('strict', False)
@@ -496,10 +496,10 @@ class IPAddressField(BaseField):
             raise exceptions.FieldValidationError(str(e))
         if self.version == 'ipv4' and value.version() != 4:
             raise exceptions.FieldValidationError(
-                'expected an ipv4 address, got {}'.format(value.strNormal()))
+                _('expected an ipv4 address, got {}').format(value.strNormal()))
         if self.version == 'ipv6' and value.version() != 6:
             raise exceptions.FieldValidationError(
-                'expected an ipv6 address, got {}'.format(value.strNormal()))
+                -('expected an ipv6 address, got {}').format(value.strNormal()))
         return value
 
     def to_presentation(self, value):
@@ -531,9 +531,9 @@ class URLField(StringField):
         value = self._validate_type(value)
         url = urlparse.urlparse(value)
         if url.scheme not in self.SCHEMAS:
-            raise exceptions.FieldValidationError('schema is lost')
+            raise exceptions.FieldValidationError(_('schema is lost'))
         if url.hostname == '':
-            raise exceptions.FieldValidationError('hostname is lost')
+            raise exceptions.FieldValidationError(_('hostname is lost'))
         return url.geturl()
 
     def mock_data(self):
@@ -555,7 +555,7 @@ class EnumField(BaseField):
     def _validate(self, value):
         if value not in self.choices:
             raise exceptions.FieldValidationError(
-                '{!r} not in the choices'.format(value))
+                _('{!r} not in the choices').format(value))
         return value
 
     def mock_data(self):
@@ -608,7 +608,7 @@ class ListField(BaseField):
     def __init__(self, field=None, min_length=0, max_length=None, **kwargs):
         if field is not None and not isinstance(field, BaseField):
             raise ValueError(
-                'field param expect a instance of BaseField, but got {!r}'.format(field))
+                _('field param expect a instance of BaseField, but got {!r}').format(field))
         self.field = field
 
         self._check_value_range(min_length, max_length)
@@ -621,11 +621,11 @@ class ListField(BaseField):
         value = self._validate_type(value)
         if self.min_length is not None and len(value) < self.min_length:
             raise exceptions.FieldValidationError(
-                'this list has too few elements, min length is {}'.format(self.min_length))
+                _('this list has too few elements, min length is {}').format(self.min_length))
 
         if self.max_length is not None and len(value) > self.max_length:
             raise exceptions.FieldValidationError(
-                'this list has too many elements, max length is {}'.format(self.max_length))
+                _('this list has too many elements, max length is {}').format(self.max_length))
 
         if self.field:
             new_value = []
@@ -678,7 +678,7 @@ class TimestampField(IntegerField):
             return super(TimestampField, self)._validate(value)
         except exceptions.FieldValidationError as e:
             raise exceptions.FieldValidationError(
-                'Got wrong timestamp: {}'.format(value))
+                _('Got wrong timestamp: {}').format(value))
 
 
 class DatetimeField(BaseField):
@@ -696,7 +696,7 @@ class DatetimeField(BaseField):
                 import pytz
             except ImportError as e:
                 raise ValueError(
-                    'Cant create DatetimeField instance with tzinfo {}, please install pytz and try again'.format(params['tzinfo']))
+                    _('Cant create DatetimeField instance with tzinfo {}, please install pytz and try again').format(params['tzinfo']))
             tzinfo = pytz.timezone(tzinfo)
         self.tzinfo = tzinfo
         kwargs.setdefault('strict', False)
@@ -716,7 +716,7 @@ class DatetimeField(BaseField):
         elif isinstance(value, six.integer_types):
             return self.INTERNAL_TYPE.fromtimestamp(value, tz=self.tzinfo)
         else:
-            raise ValueError('Got wrong datetime value: {}'.format(value))
+            raise ValueError(_('Got wrong datetime value: {}').format(value))
 
     def _validate(self, value):
         value = self._validate_type(value)
