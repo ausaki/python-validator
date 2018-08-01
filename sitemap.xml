@@ -11,6 +11,11 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>/i18n/</loc>
+     <lastmod>2018-08-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>/fields/</loc>
      <lastmod>2018-08-01</lastmod>
      <changefreq>daily</changefreq>
