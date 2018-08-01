@@ -45,3 +45,18 @@ def test_custom_global_validator():
     data['name'] = 'foo'
     v = V(data)
     assert not v.is_valid()
+
+
+def test_missed_field():
+    class V(Validator):
+        name = StringField(max_length=50, required=True)
+        age = IntegerField(min_value=1, max_value=120)
+        sex = EnumField(choices=['f', 'm'])
+    
+    data = {
+        'name': 'Bob',
+        'sex': 'm'
+    }
+    v = V(data)
+    v.is_valid()
+    assert 'age' not in v.validated_data
