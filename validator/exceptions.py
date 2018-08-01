@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import six
-from .utils import force_text, force_bytes
+from .utils import force_text, force_str
 from .translation import gettext as _
 
 
@@ -39,7 +39,7 @@ class BaseValidationError(Exception):
         return self.detail
 
     def __str__(self):
-        return force_bytes(self.detail)
+        return force_str(self.detail)
 
     def __unicode__(self):
         return force_text(self.detail)
