@@ -10,6 +10,9 @@ def test_ok():
         {'link': 'http://www.example.com/'},
         {'link': 'http://user:pass@www.example.com/'},
         {'link': 'http://www.example.com/a/b/c/?a=1&b=2'},
+        {'link': 'https://www.example.com/'},
+        {'link': 'https://user:pass@www.example.com/'},
+        {'link': 'https://www.example.com/a/b/c/?a=1&b=2'},
     ]
     for d in data:
         v = V(d)
