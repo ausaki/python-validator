@@ -521,7 +521,7 @@ class IPAddressField(BaseField):
 class URLField(StringField):
     FIELD_TYPE_NAME = 'url'
     PARAMS = []
-    SCHEMAS = ('http', 'http')
+    SCHEMAS = ('http', 'https')
 
     def __init__(self, **kwargs):
         kwargs['strict'] = True
