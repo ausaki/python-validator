@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>/</loc>
-     <lastmod>2018-08-01</lastmod>
+     <lastmod>2019-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/advanced/</loc>
-     <lastmod>2018-08-01</lastmod>
+     <lastmod>2019-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/i18n/</loc>
-     <lastmod>2018-08-01</lastmod>
+     <lastmod>2019-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/fields/</loc>
-     <lastmod>2018-08-01</lastmod>
+     <lastmod>2019-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/custom_field/</loc>
-     <lastmod>2018-08-01</lastmod>
+     <lastmod>2019-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/exceptions/</loc>
-     <lastmod>2018-08-01</lastmod>
+     <lastmod>2019-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/history/</loc>
-     <lastmod>2018-08-01</lastmod>
+     <lastmod>2019-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/license/</loc>
-     <lastmod>2018-08-01</lastmod>
+     <lastmod>2019-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
