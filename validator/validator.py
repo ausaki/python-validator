@@ -37,7 +37,7 @@ class Validator(object):
         """
         :param raw_data: unvalidate data
         """
-        assert isinstance(raw_data, dict)
+        assert isinstance(raw_data, dict), '"raw_data" must be a dict, not "{}"'.format(type(raw_data).__name__)
         self.raw_data = raw_data
         self.validated_data = None
         self.errors = {}
