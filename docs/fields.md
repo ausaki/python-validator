@@ -558,7 +558,7 @@ IP 地址字段，继承自 `BaseField`。
 
 字典字段，继承自 `BaseField`。
 
-合法值必须是通过 `validator` 校验的 `dict`。
+合法值必须是能够通过 `validator` 校验的 `dict`。
 
 校验通过后返回原始值的拷贝。
 
@@ -566,7 +566,7 @@ IP 地址字段，继承自 `BaseField`。
 
     - `validator`
 
-        `Validator` 实例，用于验证字典内各个字段的数据。由于 `dict` 是一个 key-value 的复合数据结构，很难通过简单的规则去约束它，因此，最直接的方法就是定义一个 `Validator` 去校验 `dict`。
+        继承自 `Validator` 的类，用于验证字典内各个字段的数据。由于 `dict` 是一个 key-value 的复合数据结构，很难通过简单的规则去约束它，因此，最直接的方法就是定义一个 `Validator` 去校验 `dict`。
 
         如果 `validator` 等于 `None`，则任何 `dict` 都是合法的。
 

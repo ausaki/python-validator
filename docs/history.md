@@ -1,5 +1,13 @@
 # 历史版本
 
+## Version 0.0.8
+
+- 修复 [#9](https://github.com/ausaki/python-validator/issues/9)
+
+- 使用 poetry 替代之前的 pipenv.
+
+- 删除一些代码.
+
 ## Version 0.0.7
 
 - 添加 assert 语句的错误信息。

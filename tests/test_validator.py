@@ -45,6 +45,7 @@ def test_custom_global_validator():
     data['name'] = 'foo'
     v = V(data)
     assert not v.is_valid()
+    assert '__data_error__' in v.str_errors
 
 
 def test_missed_field():

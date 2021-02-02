@@ -72,7 +72,7 @@ class Validator(object):
         try:
             data = self.validate(data)
         except exceptions.ValidationError as e:
-            self.errors['__data_error__'] = [e]
+            self.errors['__data_error__'] = e
 
         if not self.errors:
             self.validated_data = data
