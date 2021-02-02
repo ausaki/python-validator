@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "validator"
+name = "python-validator"
 version = "0.0.8"
 description = "a data validator like Django ORM"
 readme = "README.md"
@@ -8,6 +8,9 @@ license = "MIT"
 repository = "https://github.com/ausaki/python-validator"
 documentation = "https://ausaki.github.io/python-validator/"
 keywords = ['data validator']
+packages = [
+    { include = "validator" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.6.0"
