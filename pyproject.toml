@@ -20,7 +20,7 @@ pytz = {version = "*", optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
-mkdocs = "^1.1.2"
+mkdocs = "^1.2.3"
 tox = "^3.21.3"
 mkdocs-material = "^6.2.7"
 
